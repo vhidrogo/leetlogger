@@ -12,11 +12,11 @@ LeetLogger is composed of three core components:
 
 1. **Problems Sheet**  
    - **Role**: Serves as the curated problem repository.
-   - **Key Fields**: `Problem Name`, `Link`, `Dominant Topic`, `Difficulty`, `Input Data Structure`, `Target Time`.
+   - **Key Fields**: `LC ID`, `Problem Name`, `Link`, `Dominant Topic`, `Subdominant Topic`, `Difficulty`, `Input Data Structure`, `Target Time`.
 
 2. **Attempts Sheet**  
    - **Role**: Records all problem-solving attempts.
-   - **Key Fields**: `Date`, `Start Time`, `End Time` (nullable), `Solve Minutes` (calculated), `Solved` (boolean).
+   - **Key Fields**: `LC ID`, `Date`, `Start Time`, `End Time`, `Duration Minutes` (calculated), `Solved` (boolean), `Notes`.
 
 3. **Apps Script Backend**  
    - **Modules**:

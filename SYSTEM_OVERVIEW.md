@@ -4,6 +4,8 @@
 
 LeetLogger is a Google Sheets–based system enhanced with Apps Script to streamline LeetCode practice tracking. It automates problem selection, logging of attempts, and performance tracking, aiming to reduce manual overhead and improve the consistency and quality of coding interview preparation.
 
+The system is also designed to support a **curated, pattern-driven mastery list** that enforces **optimal-only solutions** and emphasizes **high transferability across problems**. It helps users systematically master core techniques while also tracking foundational tools that appear across multiple problem types.
+
 ---
 
 ## Architecture Overview
@@ -47,8 +49,37 @@ LeetLogger is composed of three core components:
 
 ---
 
+## Problem Classification Framework
+
+To build long-term mastery, problems are classified using two layers of topic metadata:
+
+### 1. **Dominant Topic**
+The core algorithmic pattern required for the optimal solution.  
+Examples: `Two-pointer`, `Sliding Window`, `Binary Search`, `Greedy`, `Dynamic Programming`.
+
+Some problems do not fall under a well-known dominant pattern but still reinforce key transferable mechanics (e.g. scanning from both directions, prefix prep). These are grouped under a catch-all dominant topic category:  
+**`Foundational Concepts`** — used intentionally to avoid polluting the core list of high-frequency patterns while still retaining value.
+
+This makes the Dominant Topic field both **exclusive** (one per problem) and **curated** for transferability and optimization habit-building.
+
+### 2. **Subdominant Topics**
+Secondary techniques that support the main solution or provide additional nuance.  
+Examples: `HashMap`, `Prefix Sum`, `Monotonic Stack`, `Two-pass Linear Scan`, `Sorting`, `Bit Manipulation`.
+
+This field allows distinguishing between problems that fall under the same high-level idea but differ in supporting tactics, while also capturing the essence of *foundational techniques* when they appear in support of more common strategies.
+
+---
+
+### Summary:
+- Every problem has **exactly one Dominant Topic**, including possibly `Foundational Concepts`.
+- Subdominant Topics provide additional clarity and are useful for grouping auxiliary patterns like `Two-pass Scan` or `Preprocessing`.
+- This classification structure **distinguishes foundational tools from dominant strategies** while preserving the transferability and clarity of the problem list.
+
+---
+
 ## Design Considerations
 
+- **Scalable Structure**: Built for long-term growth and easy extension of new problem-solving paradigms and metadata fields.
 - **Separation of Concerns**: Distinct separation between problem metadata and attempt logs for clarity and maintainability.
 - **Data Integrity**: Automated logging reduces manual errors and ensures consistent data capture.
 - **Extensibility**: Modular design allows for future enhancements such as performance analytics dashboards or integration with external APIs.
@@ -67,5 +98,4 @@ LeetLogger is composed of three core components:
 
 ## Conclusion
 
-LeetLogger exemplifies a thoughtful approach to automating and enhancing the coding interview preparation process. By leveraging familiar tools like Google Sheets and extending their capabilities with Apps Script, it offers a practical solution that balances functionality with ease of use, all while maintaining a focus on data integrity and extensibility.
-
+LeetLogger exemplifies a thoughtful and scalable approach to automating and enhancing the coding interview preparation process. By leveraging familiar tools like Google Sheets and extending their capabilities with Apps Script, it offers a practical solution that balances functionality with ease of use. The system’s classification framework supports a **pattern-first, optimal-solution-only mindset** and helps the user systematically build **transferable algorithmic intuition**.

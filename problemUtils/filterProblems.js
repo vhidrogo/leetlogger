@@ -28,4 +28,7 @@ function filterProblems(data, dominantTopic, difficulty, inputDataStructure) {
   }
   
 
-module.exports = { filterProblems };
+// This block is only for local testing in Node.js, not Apps Script
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { filterProblems };
+}

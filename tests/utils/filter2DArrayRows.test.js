@@ -1,4 +1,4 @@
-const { filter2DArrayRows } = require('../filter2DArrayRows');
+const { filter2DArrayRows } = require('../../src/utils/filter2DArrayRows');
 
 const dummyData = [
   ['LC ID', 'Dominant Topic', 'Difficulty', 'Input Data Structure'],

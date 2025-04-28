@@ -1,3 +1,5 @@
+const { filter2DArrayRows } = require("../utils/filter2DArrayRows");
+
 /**
  * Fetches problem data from the Problems sheet.
  * @returns {Array[]} 2D array of problem data including headers.
@@ -21,5 +23,10 @@ function getProblemsData() {
  */
 function getFilteredProblemsFromSheet(dominantTopic, difficulty, inputDataStructure) {
     const data = getProblemsData();
-    return filterProblems(data, dominantTopic, difficulty, inputDataStructure);
-  }
+    const criteria = {
+      'Dominant Topic': dominantTopic,
+      'Difficulty': difficulty,
+      'Input Data Structure': inputDataStructure
+    };
+    return filter2DArrayRows(data, criteria);
+}

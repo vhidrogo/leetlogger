@@ -4,7 +4,8 @@
   "description": "LeetLogger is a Google Sheets + Apps Script project designed to streamline and automate the process of LeetCode practice tracking. It provides a structured way to log problem attempts, measure progress over time, and reduce manual effort in problem selection and data entry.",
   "main": "getProblem.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "node build.js"
   },
   "keywords": [],
   "author": "",

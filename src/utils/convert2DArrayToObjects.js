@@ -11,7 +11,4 @@ function convert2DArrayToObjects(keys, rows) {
     return rows.map(row => convertArrayToObject(keys, row));
 }   
 
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { convert2DArrayToObjects };
-}
-  
+module.exports = { convert2DArrayToObjects };

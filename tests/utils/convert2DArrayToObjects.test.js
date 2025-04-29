@@ -1,4 +1,4 @@
-const { convert2DArrayToObjects } = require('../convert2DArrayToObjects');
+const { convert2DArrayToObjects } = require('../../src/utils/convert2DArrayToObjects');
 
 describe('convert2DArrayToObjects', () => {
   it('converts 2D array of values into array of objects', () => {

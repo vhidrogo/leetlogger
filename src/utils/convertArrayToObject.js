@@ -17,8 +17,4 @@ function convertArrayToObject(keys, values) {
       }, {});
 }
 
-// This block is only for local testing in Node.js, not Apps Script
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = { convertArrayToObject };
-}
-  
+module.exports = { convertArrayToObject };

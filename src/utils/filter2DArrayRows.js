@@ -28,4 +28,3 @@ function filter2DArrayRows(data, criteriaMap) {
 }
 
 module.exports = { filter2DArrayRows };
-  

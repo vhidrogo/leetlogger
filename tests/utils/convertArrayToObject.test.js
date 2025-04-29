@@ -1,4 +1,4 @@
-const { convertArrayToObject } = require('../convertArrayToObject');
+const { convertArrayToObject } = require('../../src/utils/convertArrayToObject');
 
 describe('convertArrayToObject', () => {
     it('converts keys and values into an object', () => {

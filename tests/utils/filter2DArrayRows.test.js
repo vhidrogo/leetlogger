@@ -16,7 +16,11 @@ describe('filter2DArrayRows', () => {
       'Input Data Structure': 'Array'
     };
     const result = filter2DArrayRows(dummyData, criteria);
-    expect(result).toEqual([[1, 'Two-Pointer', 'Easy', 'Array']]);
+    console.log(result);
+    expect(result).toEqual([
+      ['LC ID', 'Dominant Topic', 'Difficulty', 'Input Data Structure'],
+      [1, 'Two-Pointer', 'Easy', 'Array']
+    ]);
   });
 
   it('filters all wildcards', () => {
@@ -26,7 +30,7 @@ describe('filter2DArrayRows', () => {
       'Input Data Structure': 'All'
     };
     const result = filter2DArrayRows(dummyData, criteria);
-    expect(result.length).toBe(4);
+    expect(result.length).toBe(5);
   });
 
   it('filters with one wildcard', () => {
@@ -36,7 +40,7 @@ describe('filter2DArrayRows', () => {
       'Input Data Structure': 'Array'
     };
     const result = filter2DArrayRows(dummyData, criteria);
-    expect(result.length).toBe(2);
+    expect(result.length).toBe(3);
   });
 
   it('returns empty array when no match', () => {

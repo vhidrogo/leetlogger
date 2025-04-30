@@ -3,7 +3,7 @@
  *
  * @param {Array[]} data - 2D array including headers in the first row.
  * @param {Object} criteriaMap - Key-value pairs where keys are header names and values are filter values. Use 'All' to skip filtering on a column.
- * @returns {Array[]} Filtered array of rows (excluding headers).
+ * @returns {Array[]} Filtered array of rows.
  */
 function filter2DArrayRows(data, criteriaMap) {
     if (data.length === 0) return [];
@@ -19,12 +19,14 @@ function filter2DArrayRows(data, criteriaMap) {
       }
       headerIndices[key] = index;
     });
-  
-    return data.slice(1).filter(row =>
+
+    const filtered = data.slice(1).filter(row =>
       Object.entries(criteriaMap).every(([key, value]) =>
         value === 'All' || row[headerIndices[key]] === value
       )
     );
+  
+    return filtered.length ? [headers, ...filtered] : []
 }
 
 module.exports = { filter2DArrayRows };

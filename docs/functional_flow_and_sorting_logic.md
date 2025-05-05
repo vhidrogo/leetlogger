@@ -37,14 +37,16 @@ This doc covers:
 
 ### 📌 Problem Selection Flow
 1. **User sets filter criteria** (Dominant Topic, Difficulty, etc.)
-2. **Click 'Select'**
-3. Apps Script:
+2. **User configures "Selection Prioritization Criteria"** checkboxes:
+   - Solved
+   - Time Complexity Optimal
+   - Space Complexity Optimal
+   - Code Quality
+3. **Click 'Select'**
+4. Apps Script:
    - Filters Problems Sheet based on selected criteria
    - Joins the filtered problems with their latest attempt data
-   - Sorts the combined dataset by:
-     1. **Unattempted problems** first (ascending LC ID)
-     2. Then **unsolved problems**, ordered by date and start time (oldest first)
-     3. Finally **solved problems**, ordered similarly by most recent attempt
+   - Sorts the combined dataset by **Selection Prioritization Criteria**
    - Displays problem details on the control panel
 
 ---
@@ -78,34 +80,33 @@ This doc covers:
 
 ---
 
-## Sorting Logic
+## Selection Prioritization Criteria & Sorting Logic
 
-The problem selection workflow sorts filtered problems with the following priority:
+The problem selection workflow sorts filtered problems based on enabled prioritization criteria:
 
-1. **Unattempted Problems**  
-   Sorted by ascending LeetCode ID (LC ID).
+**User-Configurable Checkboxes:**
+- ✅ Solved (default checked)
+- ✅ Time Optimal (default checked)
+- ✅ Space Optimal (default checked)
+- ⬜ Code Quality (default unchecked)
 
-2. **Unsolved Problems**  
-   Problems with one or more past attempts, none marked as `Solved = TRUE`.  
-   Sorted by:
-   - Earliest start time
+**Sorting Priority:**
 
-3. **Solved Problems**  
-   Problems where at least one attempt has `Solved = TRUE`.  
-   Sorted by:
-   - Earliest start time
+1. **Unattempted Problems** (Solved = null)
+   - Sorted by ascending LC ID.
 
-This ensures new problems surface first, followed by unsolved problems that haven’t been revisited in a while, and finally solved problems for spaced repetition or review.
+2. **Unsolved Problems** (Solved = false)
+   - Sorted by earliest start time.
 
----
+3. **Problems Failing Any Checked Optimization Criteria**
+   - If `Time Optimal` is checked → problems where `time_optimal = false`
+   - If `Space Optimal` is checked → problems where `space_optimal = false`
+   - If `Code Quality` is checked → problems where `code_quality = false`
+   - Sorted by earliest start time.
 
-## Planned: Sidebar Timer Integration
-
-A future enhancement will introduce a live timer sidebar, launched via the **Start** action.  
-It will:
-- Pull target time from a reference table based on selected problem’s **Dominant Topic** and **Difficulty**
-- Display a countdown alongside elapsed time
-- Optionally auto-log time on completion
+4. **Solved and Fully Optimized Problems**
+   - Solved = true and all checked criteria fields = true
+   - Sorted by earliest start time.
 
 ---
 
@@ -116,7 +117,7 @@ flowchart TD
   A[User clicks 'Select'] --> B[getProblem()]
   B --> C[Filter Problems by Criteria]
   C --> D[Join with Latest Attempt Data]
-  D --> E[Sort by Selection Priorities]
+  D --> E[Sort by Selection Prioritization Criteria]
   E --> F[Display Problem Details]
 
   F -->|User clicks 'Start'| G[startAttempt()]
@@ -128,16 +129,22 @@ flowchart TD
   K --> L[Append to Attempts Sheet]
 
   L -->|User clicks 'Next'| M[nextProblem()]
-  M --> F
-  ```
+  M --> E
+```
 
 ## Design Considerations
 
-- **State Management**: Maintain clean UI state transitions between actions.
-- **Data Integrity**: Enforce required fields and prevent invalid or duplicate entries.
+- **State Management:**  
+  Maintain reliable, predictable UI state transitions between actions (`Select`, `Start`, `Log`, `Next`). Disable and enable controls contextually to prevent invalid actions or duplicate entries.
+
+- **Data Integrity:**  
+  Enforce required field validation and prevent duplicate attempt logs. Guarantee accurate solve duration calculations and ensure attempt statuses reflect the latest action.
+
 - **Extensibility**: Sidebar timer and custom tracking metrics are intentionally decoupled from core flows for modular future development.
+
 - **Attempt Quality Metrics:**  
-  Incorporate qualitative fields like "Optimized", "Redundant Checks", or "Missed Edge Case" notes into each attempt log for deeper performance analysis.
+  Incorporate qualitative fields like "Optimal Time Complexity", "Optimal Space Complexity", or "Quality Code" notes into each attempt log for deeper performance analysis.
+
 - **Custom Sort Logic**: Centralized comparator ensures consistent problem ordering for fair problem rotation and spaced review.
 
 ---
@@ -146,17 +153,36 @@ flowchart TD
 
 Planned improvements and features to extend the functionality and value of the LeetLogger system:
 
-- **Live Sidebar Timer**: Integrate a real-time timer in the Apps Script sidebar, launched via the `Start` button. The timer will dynamically pull the target solve time from a lookup table based on problem topic and difficulty, providing live countdown feedback during a coding attempt.
-- **Performance Analytics Dashboards**: Develop Google Sheets dashboards to visualize attempt history, solve rates, solve times, and topic proficiency trends over time.
+- **Live Sidebar Timer**: Integrate a real-time timer in the Apps Script sidebar, launched via the `Start` button. The timer will dynamically pull the target solve time from a lookup table based on problem topic and difficulty, providing live countdown feedback during a coding attempt and auto-log behavior.
+
+- **Performance Analytics Dashboards:**  
+  Google Sheets dashboards to visualize:
+  - Attempt history
+  - Solve rates
+  - Average solve times
+  - Topic proficiency trends  
+
+  Powered by Apps Script-driven queries and Google Sheets charting.
+
 - **Custom Filters:**  
   User-defined tags and categories beyond topic and difficulty to enable more flexible practice regimens.
+  
+- **Enhanced Selection Prioritization Rules:**  
+  Expand queue logic to optionally prioritize by:
+  - Problems with most failed attempts
+  - Problems with highest average solve times
+  - Problems with notes included in latest attempts
+  - Performance-based rotation logic (weaker topics first)
+  - Custom tags
 
 ---
 
 ## Conclusion
 
-This document formalizes LeetLogger’s functional workflows, sorting rules, and auxiliary modules. The system emphasizes a structured, data-driven approach to LeetCode practice, prioritizing optimal solutions and transferable patterns through an intentionally curated, algorithm-first problem list.
+This document defines LeetLogger’s operational workflows, sorting rules, and supporting modules. It emphasizes a structured, scalable, and data-driven approach to LeetCode practice, intentionally prioritizing optimal solutions and transferable patterns through a curated, algorithm-first problem list to maximize learning efficiency and pattern recognition.
 
-Its modular, scalable design supports ongoing enhancements like live timers and analytics dashboards without disrupting core mechanics.
+With modular designs for both the selection workflows and problem prioritization strategies, the system accommodates ongoing enhancements like live timers, analytics dashboards, qualitative attempt metrics, and custom filtering without disrupting existing functionality.
+
+The Selection Prioritization Criteria feature strengthens user control over their problem queues — enabling focused, adaptable, and performance-aware practice regimens.
 
 ---

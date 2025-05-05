@@ -10,8 +10,8 @@
 | End Time           | Time     | Time when attempt ended                                            | `08:30 AM`                |
 | Duration Minutes   | Number   | End Time - Start Time in minutes                                   | `18`                      |
 | Solved             | Boolean  | Whether the problem was solved successfully (LeetCode accepted)   | `TRUE`                    |
-| Time Optimal       | Boolean  | Whether the solution met the target time complexity               | `TRUE`                    |
-| Space Optimal      | Boolean  | Whether the solution met the target space complexity              | `FALSE`                   |
+| Time Complexity Optimal | Boolean  | Whether the solution met the target time complexity               | `TRUE`                    |
+| Space Complexity Optimal | Boolean  | Whether the solution met the target space complexity              | `FALSE`                   |
 | Quality Code       | Boolean  | Whether the code was clean, idiomatic, and free of avoidable issues | `FALSE`                   |
 | Notes              | String   | Optional freeform notes                                            | `"Solved, but nested loops could be combined"` |
 

@@ -1,3 +1,5 @@
+const { convert2DArrayToObjects } = require("../utils/convert2DArrayToObjects");
+
 function getFilteredProblems() {
     const excludeColumns = ['Subdominant Topic', 'Notes'];
     const problems = getSheetData('Problems', excludeColumns);
@@ -12,9 +14,11 @@ function getFilteredProblems() {
         'Input Data Structure': selectedInputDataStructure
     }
 
-    return filter2DArrayRows(problems, criteria);
+    const [problemHeaders, ...problemData] = filter2DArrayRows(problems, criteria);
+
+    return convert2DArrayToObjects(problemHeaders, problemData);
 }
 
 function getFilteredProblemsLogTest() {
-    Logger.log(getFilteredProblems());
+    getFilteredProblems().forEach(row => Logger.log(row));
 }

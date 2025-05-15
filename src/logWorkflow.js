@@ -1,4 +1,5 @@
 const CONFIG = {
+    END_TIME_RANGE_NAME: 'ControlPanel_EndTime',
     INPUTS_RANGE_NAME: 'ControlPanel_AttemptInputs',
     SHEET_NAME: 'Attempts',
   };
@@ -38,7 +39,7 @@ function resetAttemptInputs() {
     ]
 
     const defaults = {
-        'Duration Minutes': '=(ControlPanel_EndTime-ControlPanel_StartTime)*1440',
+        'Duration Minutes': `=if(${CONFIG.END_TIME_RANGE_NAME}="","",(${CONFIG.END_TIME_RANGE_NAME}-ControlPanel_StartTime)*1440)`,
     }
 
     resetInputValues(CONFIG.INPUTS_RANGE_NAME, defaults, clearFields)

@@ -15,9 +15,9 @@ describe('mapLatestAttemptsByLcId', () => {
         const result = mapLatestAttemptsByLcId(attempts);
 
         expect(Object.keys(result).length).toBe(3);
-        expect(result['1'][1]).toBe('Mon Apr 28 09:23:32 GMT-07:00 2025');
-        expect(result['2'][1]).toBe('Mon Apr 28 09:23:32 GMT-07:00 2025');
-        expect(result['3'][1]).toBe('Tue Apr 29 09:23:32 GMT-07:00 2025');
+        expect(result['1']['Start Time']).toBe('Mon Apr 28 09:23:32 GMT-07:00 2025');
+        expect(result['2']['Start Time']).toBe('Mon Apr 28 09:23:32 GMT-07:00 2025');
+        expect(result['3']['Start Time']).toBe('Tue Apr 29 09:23:32 GMT-07:00 2025');
     });
 
     it('Returns empty object when given only headers and no data rows', () => {

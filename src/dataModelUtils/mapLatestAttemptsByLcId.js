@@ -1,3 +1,5 @@
+const { convertArrayToObject } = require("../utils/convertArrayToObject");
+
 function mapLatestAttemptsByLcId(attempts) {
     const [headers, ...data] = attempts;
     const lcIdIndex = headers.indexOf('LC ID');
@@ -16,7 +18,11 @@ function mapLatestAttemptsByLcId(attempts) {
             latestAttemptsMap[lcId] = row;
         }
     }
-    
+
+    for (const lcId in latestAttemptsMap) {
+        latestAttemptsMap[lcId] = convertArrayToObject(headers, latestAttemptsMap[lcId]);
+    }
+
     return latestAttemptsMap;
 }
 

@@ -23,4 +23,8 @@ function generateProblemSelectionList() {
     return problemAttempts;
 }
 
+function generateProblemSelectionListLogTest() {
+    generateProblemSelectionList().forEach(row => Logger.log(row));
+}
+
 module.exports = { generateProblemSelectionList }

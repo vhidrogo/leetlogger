@@ -10,3 +10,5 @@ function setInputsOnSheetUI(rangeName, inputsMap) {
 
     range.setValues(updatedValues);
 }
+
+module.exports = { setInputsOnSheetUI }

@@ -14,3 +14,5 @@ function getInputsFromSheetUI(rangeName) {
 
     return new Map(range.getValues());
 }
+
+module.exports = { getInputsFromSheetUI }

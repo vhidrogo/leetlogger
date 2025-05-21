@@ -11,7 +11,7 @@ const { isAttemptInProgress } = require("./workflowUtils");
  * - Displays the selected problem's attributes on the UI.
  */
 function onSelectClick() {
-    if (isAttemptInProgress) {
+    if (isAttemptInProgress()) {
         SpreadsheetApp.getUi().alert('Attempt currently in progress!');
         return;
     }

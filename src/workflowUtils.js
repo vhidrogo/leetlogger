@@ -3,22 +3,36 @@ const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
 const { setInputsOnSheetUI } = require("./sheetUtils/setInputsOnSheetUI");
 
 /**
- * Updates the UI with the selected problem's attributes.
+ * Updates the UI with the selected problem's attributes and latest attempt details.
  *
- * Retrieves the input fields map from the UI, maps problem attributes to the corresponding keys,  
- * and writes the updated values back to the UI.
+ * Retrieves the input fields map from the UI for both problem attributes and latest attempt attributes,  
+ * then maps the provided attribute values to their corresponding keys and writes the updated values  
+ * back to the UI.
  *
- * @param {Object} problemAttributes - An object containing attribute key-value pairs for the selected problem.
+ * For the latest attempt attributes section, if a given attribute key does not exist in the provided  
+ * problemAttemptAttributes object, the corresponding input field is set to an empty string.
+ *
+ * @param {Object} problemAttemptAttributes - An object containing attribute key-value pairs for the selected problem and its latest attempt.
+ *                                            Keys should match the input field names in the UI control panel ranges.
  */
-function displayCurrentProblem(problemAttributes) {
-    const inputsMap = getInputsFromSheetUI('ControlPanel_CurrentProblemInputs');
-    for (const key of inputsMap.keys()) {
-        if (problemAttributes.hasOwnProperty(key)) {
-            inputsMap.set(key, problemAttributes[key]);
+function displayCurrentProblem(problemAttemptAttributes) {
+    const problemAttributesRangeName = 'ControlPanel_CurrentProblem_ProblemAttributes';
+    const latestAttemptAttributesRangeName = 'ControlPanel_CurrentProblem_LatestAttemptAttributes'
+
+    const problemAttributes = getInputsFromSheetUI(problemAttributesRangeName);
+    for (const key of problemAttributes.keys()) {
+        if (problemAttemptAttributes.hasOwnProperty(key)) {
+            problemAttributes.set(key, problemAttemptAttributes[key]);
         }
     }
+    setInputsOnSheetUI(problemAttributesRangeName, problemAttributes);
 
-    setInputsOnSheetUI('ControlPanel_CurrentProblemInputs', inputsMap);
+    const latestAttemptAttributes = getInputsFromSheetUI(latestAttemptAttributesRangeName);
+    for (const key of latestAttemptAttributes.keys()) {
+        const newValue = problemAttemptAttributes[key] ?? '';
+        latestAttemptAttributes.set(key, newValue);
+    }
+    setInputsOnSheetUI(latestAttemptAttributesRangeName, latestAttemptAttributes);
 }
 
 /**

@@ -43,4 +43,6 @@ function resetAttemptInputs() {
     }
 
     resetInputValues(CONFIG.INPUTS_RANGE_NAME, defaults, clearFields)
+
+    // TODO: dynamically hide Attempt in Progress UI
 }

@@ -1,6 +1,21 @@
 const { getNamedRangeValue } = require("./sheetUtils/getNamedRangeValue");
 
 /**
+ * Retrieves the current problem's LeetCode ID from the named range.
+ * 
+ * @throws {Error} If no LC ID is found in the named range.
+ * @returns {string} The LeetCode ID of the currently selected problem.
+ */
+function getCurrentProblemLcId() {
+    const lcId = getNamedRangeValue('ControlPanel_CurrentProblem_LC_ID');
+    if (!lcId) {
+        throw new Error('Missing LC ID.');
+    }
+
+    return lcId;
+}
+
+/**
  * Checks whether a LeetLogger problem attempt is currently in progress.
  *
  * This is determined by checking if the 'ControlPanel_StartTime' named range
@@ -24,4 +39,4 @@ function isAttemptDone() {
     return getNamedRangeValue('ControlPanel_EndTime') != '';
 }
 
-module.exports = { isAttemptInProgress, isAttemptDone }
+module.exports = { getCurrentProblemLcId, isAttemptInProgress, isAttemptDone }

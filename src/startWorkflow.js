@@ -1,6 +1,5 @@
-const { getNamedRangeValue } = require("./sheetUtils/getNamedRangeValue");
 const { setNamedRangeValue } = require("./sheetUtils/setNamedRangeValue");
-const { isAttemptInProgress } = require("./workflowUtils");
+const { isAttemptInProgress, getCurrentProblemLcId } = require("./workflowUtils");
 
 /**
  * Handles the click event for starting a new problem attempt.
@@ -31,21 +30,6 @@ function onStartClick() {
     updateAttemptInProgressUI(lcId);
 
     // TODO: Show live timer
-}
-
-/**
- * Retrieves the current problem's LeetCode ID from the named range.
- * 
- * @throws {Error} If no LC ID is found in the named range.
- * @returns {string} The LeetCode ID of the currently selected problem.
- */
-function getCurrentProblemLcId() {
-    const lcId = getNamedRangeValue('ControlPanel_CurrentProblem_LC_ID');
-    if (!lcId) {
-        throw new Error('Missing LC ID.');
-    }
-
-    return lcId;
 }
 
 /**

@@ -13,3 +13,5 @@ function getNamedRange(rangeName) {
     
     return range;
 }
+
+module.exports = { getNamedRange }

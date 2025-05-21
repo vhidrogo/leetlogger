@@ -16,20 +16,11 @@ function onOptimalClick() {
         return;
     }
 
-    const dropdownFields = [
-        'Solved',
-        'Time Complexity Optimal',
-        'Space Complexity Optimal',
-        'Quality Code'
-    ];
-
-    const inputsRangeName = 'ControlPanel_AttemptInputs';
+    const inputsRangeName = 'ControlPanel_AttemptDropdownInputs';
     const inputsMap = getInputsFromSheetUI(inputsRangeName);
 
-    for (const field of dropdownFields) {
-        if (inputsMap.has(field)) {
-            inputsMap.set(field, 'Yes');
-        }
+    for (const [key] of inputsMap) {
+        inputsMap.set(key, 'Yes');
     }
 
     setInputsOnSheetUI(inputsRangeName, inputsMap);

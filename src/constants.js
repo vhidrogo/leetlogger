@@ -22,4 +22,10 @@ const MODEL_FIELD_MAPPINGS = {
     }
 }
 
-module.exports = { MODEL_FIELD_MAPPINGS }
+const NAMED_RANGES = {
+    ControlPanel: {
+        ProblemCount: 'ControlPanel_ProblemCount'
+    }
+}
+
+module.exports = { MODEL_FIELD_MAPPINGS, NAMED_RANGES }

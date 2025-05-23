@@ -11,7 +11,8 @@ const MODEL_FIELD_MAPPINGS = {
     },
     Attempt: {
         'LC ID': 'lcId',
-        'Start Time': 'End Time',
+        'Start Time': 'startTime',
+        'End Time': 'endTime',
         'Duration Minutes': 'durationMinutes',
         'Solved': 'solved',
         'Time Complexity Optimal': 'timeComplexityOptimal',

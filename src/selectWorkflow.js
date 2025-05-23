@@ -1,5 +1,7 @@
 const { generateProblemSelectionList } = require("./dataModelUtils/generateProblemSelectionList");
 const { isAttemptInProgress } = require("./workflowUtils");
+const { setNamedRangeValue } = require("./sheetUtils/setNamedRangeValue");
+const { NAMED_RANGES } = require("./constants");
 
 /**
  * Handles the logic when the "Select" button is clicked in the LeetLogger UI.
@@ -15,6 +17,8 @@ function onSelectClick() {
     }
 
     const problems = generateProblemSelectionList();
-    const selectedProblem = problems[0];
-    displayCurrentProblem(selectedProblem);
+    
+    // Display the selection list problem count
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.ProblemCount, problems.length);
+    displayCurrentProblem(problems[0]);
 }

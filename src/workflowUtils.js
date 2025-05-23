@@ -1,6 +1,7 @@
 const { getNamedRangeValue } = require("./sheetUtils/getNamedRangeValue");
 const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
 const { setInputsOnSheetUI } = require("./sheetUtils/setInputsOnSheetUI");
+const { MODEL_FIELD_MAPPINGS } = require("./constants");
 
 /**
  * Updates the UI with the selected problem's attributes and latest attempt details.
@@ -21,15 +22,17 @@ function displayCurrentProblem(problemAttemptAttributes) {
 
     const problemAttributes = getInputsFromSheetUI(problemAttributesRangeName);
     for (const key of problemAttributes.keys()) {
-        if (problemAttemptAttributes.hasOwnProperty(key)) {
-            problemAttributes.set(key, problemAttemptAttributes[key]);
+        const fieldKey = MODEL_FIELD_MAPPINGS.Problem[key];
+        if (problemAttemptAttributes.hasOwnProperty(fieldKey)) {
+            problemAttributes.set(key, problemAttemptAttributes[fieldKey]);
         }
     }
     setInputsOnSheetUI(problemAttributesRangeName, problemAttributes);
 
     const latestAttemptAttributes = getInputsFromSheetUI(latestAttemptAttributesRangeName);
     for (const key of latestAttemptAttributes.keys()) {
-        const newValue = problemAttemptAttributes[key] ?? '';
+        const fieldKey = MODEL_FIELD_MAPPINGS.Attempt[key];
+        const newValue = problemAttemptAttributes[fieldKey] ?? '';
         latestAttemptAttributes.set(key, newValue);
     }
     setInputsOnSheetUI(latestAttemptAttributesRangeName, latestAttemptAttributes);

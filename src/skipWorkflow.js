@@ -32,6 +32,7 @@ function onSkipClick() {
         nextIndex = findNextProblemIndex(problems, lcId);
     } catch (e) {
         SpreadsheetApp.getUi().alert('Current problem does not match selection criteria, select a new problem.');
+        return;
     }
     
     displayCurrentProblem(problems[nextIndex]);
@@ -40,17 +41,17 @@ function onSkipClick() {
 /**
  * Finds the index of the next problem in the list relative to the current problem.
  *
- * Looks up the index of the problem with the given LC ID in the provided problem attributes list.
+ * Looks up the index of the problem with the given lcId in the provided problem attributes list.
  * If found, returns the index of the next problem (wrapping to the start if at the end).
- * If the LC ID is not found, throws an error.
+ * If the lcId is not found, throws an error.
  *
- * @param {Object[]} problemsAttributes - Array of problem attribute objects, each containing an 'LC ID' key.
- * @param {string} currentLcId - The LC ID of the currently selected problem.
+ * @param {Object[]} problemsAttributes - Array of problem attribute objects, each containing an 'lcId' property.
+ * @param {string} currentLcId - The lcId of the currently selected problem.
  * @returns {number} The index of the next problem in the list.
- * @throws Will throw an error if the current LC ID is not found in the list.
+ * @throws Will throw an error if the current lcId is not found in the list.
  */
 function findNextProblemIndex(problemsAttributes, currentLcId) {
-    const index = problemsAttributes.findIndex(item => item['LC ID'] === currentLcId);
+    const index = problemsAttributes.findIndex(item => item.lcId === currentLcId);
     
     if (index === -1) {
         throw new Error('Problem not found in list.');

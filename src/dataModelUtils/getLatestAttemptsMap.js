@@ -1,12 +1,13 @@
+const { getModelDataFromSheet } = require("../sheetUtils/getModelDataFromSheet");
+const { mapLatestAttemptsByLcId } = require("./mapLatestAttemptsByLcId");
+
 /**
- * Retrieves attempts data from the 'Attempts' sheet, excluding specified columns,
- * and returns a map of the latest attempts by 'LC ID'.
+ * Retrieves attempts data from the 'Attempts' sheet and returns a map of the latest attempts by 'LC ID'.
  *
  * @returns {Object.<string, Object>} An object mapping 'LC ID' values to the latest attempt objects.
  */
 function getLatestAttemptsMap() {
-    const excludeColumns = ['Notes'];
-    const attempts = getSheetData('Attempts', excludeColumns);
+    const attempts = getModelDataFromSheet('Attempt');
 
     return mapLatestAttemptsByLcId(attempts);
 }

@@ -3,12 +3,12 @@ const { joinProblemsWithLatestAttempts } = require("../../src/dataModelUtils/joi
 function getProblems() {
     return [
         {
-            'LC ID': 1,
-            'Name': 'Problem one'
+            lcId: 1,
+            name: 'Problem one'
         },
         {
-            'LC ID': 2,
-            'Name': 'Problem two'
+            lcId: 2,
+            name: 'Problem two'
         }
     ];
 }
@@ -17,12 +17,12 @@ describe('joinProblemsWithLatestAttempts', () => {
     it('Joins problems with correct latest attempts', () => {
         const latestAttemptsMap = {
             '1': {
-                'Date': '1/1',
-                'Solved': 'Yes'
+                date: '1/1',
+                solved: 'Yes'
             },
             '2': {
-                'Date': '1/1',
-                'Solved': 'No'
+                date: '1/1',
+                solved: 'No'
             }
         };
 
@@ -32,17 +32,17 @@ describe('joinProblemsWithLatestAttempts', () => {
         const [obj1, obj2] = result;
         expect(Object.keys(obj1).length).toBe(4);
         expect(Object.keys(obj2).length).toBe(4);
-        expect(obj1['Name']).toEqual('Problem one');
-        expect(obj1['Solved']).toEqual('Yes');
-        expect(obj2['Name']).toEqual('Problem two');
-        expect(obj2['Solved']).toEqual('No');
+        expect(obj1.name).toEqual('Problem one');
+        expect(obj1.solved).toEqual('Yes');
+        expect(obj2.name).toEqual('Problem two');
+        expect(obj2.solved).toEqual('No');
     });
 
     it('Returns problems without attempts', () => {
         const latestAttemptsMap = {
             '1': {
-                'Date': '1/1',
-                'Solved': 'Yes'
+                date: '1/1',
+                solved: 'Yes'
             }
         };
 
@@ -58,9 +58,9 @@ describe('joinProblemsWithLatestAttempts', () => {
     it('Handles duplicate keys', () => {
         const latestAttemptsMap = {
             '1': {
-                'Date': '1/1',
-                'Solved': 'Yes',
-                'LC ID': 1 // Key also exists in problems
+                date: '1/1',
+                solved: 'Yes',
+                lcId: 1 // Key also exists in problems
             }
         };
 
@@ -75,12 +75,12 @@ describe('joinProblemsWithLatestAttempts', () => {
     it('Excludes attempts for problems not in list', () => {
         const latestAttemptsMap = {
             '3': {
-                'Date': '1/1',
-                'Solved': 'Yes'
+                date: '1/1',
+                solved: 'Yes'
             },
             '4': {
-                'Date': '1/1',
-                'Solved': 'No'
+                date: '1/1',
+                solved: 'No'
             }
         };
 
@@ -95,8 +95,8 @@ describe('joinProblemsWithLatestAttempts', () => {
     it('Handles empty problems list', () => {
         const latestAttemptsMap = {
             '1': {
-                'Date': '1/1',
-                'Solved': 'Yes'
+                date: '1/1',
+                solved: 'Yes'
             }
         };
         const result = joinProblemsWithLatestAttempts([], latestAttemptsMap);

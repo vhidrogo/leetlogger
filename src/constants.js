@@ -24,7 +24,7 @@ const MODEL_FIELD_MAPPINGS = {
 
 const NAMED_RANGES = {
     ControlPanel: {
-        ProblemCount: 'ControlPanel_ProblemCount'
+        ProblemListProgress: 'ControlPanel_ProblemListProgress'
     }
 }
 

@@ -3,7 +3,7 @@ const { mapLatestAttemptsByLcId } = require("../../src/dataModelUtils/mapLatestA
 describe('mapLatestAttemptsByLcId', () => {
     it('Returns latest attempt for each problem', () => {
         const attempts = [
-            ['LC ID', 'Start Time', 'Notes'],
+            ['lcId', 'startTime', 'notes'],
             [1, 'Sun Apr 20 09:23:32 GMT-07:00 2025', 'First Try'],
             [1, 'Mon Apr 28 09:23:32 GMT-07:00 2025', 'Second Try'],
             [2, 'Mon Apr 21 09:23:32 GMT-07:00 2025', 'First Try'],
@@ -15,14 +15,14 @@ describe('mapLatestAttemptsByLcId', () => {
         const result = mapLatestAttemptsByLcId(attempts);
 
         expect(Object.keys(result).length).toBe(3);
-        expect(result['1']['Start Time']).toBe('Mon Apr 28 09:23:32 GMT-07:00 2025');
-        expect(result['2']['Start Time']).toBe('Mon Apr 28 09:23:32 GMT-07:00 2025');
-        expect(result['3']['Start Time']).toBe('Tue Apr 29 09:23:32 GMT-07:00 2025');
+        expect(result['1'].startTime).toBe('Mon Apr 28 09:23:32 GMT-07:00 2025');
+        expect(result['2'].startTime).toBe('Mon Apr 28 09:23:32 GMT-07:00 2025');
+        expect(result['3'].startTime).toBe('Tue Apr 29 09:23:32 GMT-07:00 2025');
     });
 
     it('Returns empty object when given only headers and no data rows', () => {
         const attempts = [
-            ['LC ID', 'Start Time',]
+            ['lcId', 'startTime',]
         ]
         const result = mapLatestAttemptsByLcId(attempts);
         expect(result).toEqual({});
@@ -30,7 +30,7 @@ describe('mapLatestAttemptsByLcId', () => {
 
     it('Throws error if "LC ID" column is missing', () => {
         const attempts = [
-            ['Start Time'],
+            ['startTime'],
             ['Sun Apr 20 09:23:32 GMT-07:00 2025']
         ]
         expect(() => mapLatestAttemptsByLcId(attempts).toThrow('One or more required columns are missing from attempts data.'));
@@ -38,7 +38,7 @@ describe('mapLatestAttemptsByLcId', () => {
 
     it('Throws error if "Start Time" column is missing', () => {
         const attempts = [
-            ['LC ID'],
+            ['lcId'],
             [1]
         ]
         expect(() => mapLatestAttemptsByLcId(attempts).toThrow('One or more required columns are missing from attempts data.'));

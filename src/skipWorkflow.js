@@ -1,5 +1,5 @@
 const { generateProblemSelectionList } = require("./dataModelUtils/generateProblemSelectionList");
-const { isAttemptInProgress, getCurrentProblemLcId, displayCurrentProblem } = require("./workflowUtils");
+const { isAttemptInProgress, getCurrentProblemLcId, displayCurrentProblem, displayProblemListProgress } = require("./workflowUtils");
 
 /**
  * Handles the skip button click event in the problem control panel.
@@ -35,6 +35,7 @@ function onSkipClick() {
         return;
     }
     
+    displayProblemListProgress(nextIndex, problems.length);
     displayCurrentProblem(problems[nextIndex]);
 }
 

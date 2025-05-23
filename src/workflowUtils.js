@@ -1,7 +1,19 @@
 const { getNamedRangeValue } = require("./sheetUtils/getNamedRangeValue");
+const { setNamedRangeValue } = require("./sheetUtils/setNamedRangeValue");
 const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
 const { setInputsOnSheetUI } = require("./sheetUtils/setInputsOnSheetUI");
-const { MODEL_FIELD_MAPPINGS } = require("./constants");
+const { MODEL_FIELD_MAPPINGS, NAMED_RANGES } = require("./constants");
+
+/**
+ * Displays the current problem's position within the problem list in the Control Panel.
+ *
+ * @param {number} problemIndex - Zero-based index of the current problem in the problem list.
+ * @param {number} problemListCount - Total number of problems in the current selection list.
+ */
+function displayProblemListProgress(problemIndex, problemListCount) {
+    const text = `${problemIndex + 1} of ${problemListCount}`;
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.ProblemListProgress, text);
+}
 
 /**
  * Updates the UI with the selected problem's attributes and latest attempt details.
@@ -77,4 +89,10 @@ function isAttemptDone() {
     return getNamedRangeValue('ControlPanel_EndTime') != '';
 }
 
-module.exports = { displayCurrentProblem, getCurrentProblemLcId, isAttemptInProgress, isAttemptDone }
+module.exports = {
+    displayCurrentProblem,
+    displayProblemListProgress,
+    getCurrentProblemLcId,
+    isAttemptInProgress,
+    isAttemptDone
+}

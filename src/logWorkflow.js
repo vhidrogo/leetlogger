@@ -1,3 +1,5 @@
+const { NAMED_RANGES } = require("./constants");
+
 const CONFIG = {
     END_TIME_RANGE_NAME: 'ControlPanel_EndTime',
     INPUTS_RANGE_NAME: 'ControlPanel_AttemptInputs',
@@ -40,6 +42,15 @@ function resetAttemptInputs() {
 
     const defaults = {
         'Duration Minutes': `=if(${CONFIG.END_TIME_RANGE_NAME}="","",(${CONFIG.END_TIME_RANGE_NAME}-ControlPanel_StartTime)*1440)`,
+        'Cap Minutes': `=index(
+            ${NAMED_RANGES.TargetTimes.MAX_MINUTES},
+            match(
+                ${NAMED_RANGES.ControlPanel.DOMINANT_TOPIC}&${NAMED_RANGES.ControlPanel.DIFFICULTY},
+                ${NAMED_RANGES.TargetTimes.TOPIC}&${NAMED_RANGES.TargetTimes.DIFFICULTY},
+                0
+            ),
+            1
+        )`
     }
 
     resetInputValues(CONFIG.INPUTS_RANGE_NAME, defaults, clearFields)

@@ -24,7 +24,14 @@ const MODEL_FIELD_MAPPINGS = {
 
 const NAMED_RANGES = {
     ControlPanel: {
+        DOMINANT_TOPIC: 'ControlPanel_DominantTopic',
+        DIFFICULTY: 'ControlPanel_Difficulty',
         ProblemListProgress: 'ControlPanel_ProblemListProgress'
+    },
+    TargetTimes: {
+        DIFFICULTY: 'TargetTimesDifficulty',
+        MAX_MINUTES: 'TargetTimesMaxMinutes',
+        TOPIC: 'TargetTimesTopic'
     }
 }
 

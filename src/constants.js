@@ -26,7 +26,7 @@ const NAMED_RANGES = {
     ControlPanel: {
         DOMINANT_TOPIC: 'ControlPanel_DominantTopic',
         DIFFICULTY: 'ControlPanel_Difficulty',
-        ProblemListProgress: 'ControlPanel_ProblemListProgress'
+        PROBLEM_LIST_PROGRESS: 'ControlPanel_ProblemListProgress'
     },
     TargetTimes: {
         DIFFICULTY: 'TargetTimesDifficulty',

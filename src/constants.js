@@ -24,6 +24,7 @@ const MODEL_FIELD_MAPPINGS = {
 
 const NAMED_RANGES = {
     ControlPanel: {
+        ATTEMPT_OPTIMAL_INPUTS: 'ControlPanel_AttemptOptimalInputs',
         DOMINANT_TOPIC: 'ControlPanel_DominantTopic',
         DIFFICULTY: 'ControlPanel_Difficulty',
         PRIORITIZE_NOT_QUALITY_CODE: 'ControlPanel_PrioritizeNotQualityCode',

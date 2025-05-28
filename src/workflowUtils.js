@@ -12,7 +12,7 @@ const { MODEL_FIELD_MAPPINGS, NAMED_RANGES } = require("./constants");
  */
 function displayProblemListProgress(problemIndex, problemListCount) {
     const text = `${problemIndex + 1} of ${problemListCount}`;
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.ProblemListProgress, text);
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.PROBLEM_LIST_PROGRESS, text);
 }
 
 /**

@@ -26,7 +26,12 @@ const NAMED_RANGES = {
     ControlPanel: {
         DOMINANT_TOPIC: 'ControlPanel_DominantTopic',
         DIFFICULTY: 'ControlPanel_Difficulty',
-        ProblemListProgress: 'ControlPanel_ProblemListProgress'
+        PRIORITIZE_NOT_QUALITY_CODE: 'ControlPanel_PrioritizeNotQualityCode',
+        PRIORITIZE_SPACE_NOT_OPTIMAL: 'ControlPanel_PrioritizeSpaceNotOptimal',
+        PRIORITIZE_TIME_NOT_OPTIMAL: 'ControlPanel_PrioritizeTimeNotOptimal',
+        PRIORITIZE_UNATTEMPTED: 'ControlPanel_PrioritizeUnattempted',
+        PRIORITIZE_UNSOLVED: 'ControlPanel_PrioritizeUnsolved',
+        PROBLEM_LIST_PROGRESS: 'ControlPanel_ProblemListProgress'
     },
     TargetTimes: {
         DIFFICULTY: 'TargetTimesDifficulty',

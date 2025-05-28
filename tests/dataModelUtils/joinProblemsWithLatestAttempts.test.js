@@ -18,11 +18,11 @@ describe('joinProblemsWithLatestAttempts', () => {
         const latestAttemptsMap = {
             '1': {
                 date: '1/1',
-                solved: 'Yes'
+                solved: true
             },
             '2': {
                 date: '1/1',
-                solved: 'No'
+                solved: false
             }
         };
 
@@ -32,17 +32,17 @@ describe('joinProblemsWithLatestAttempts', () => {
         const [obj1, obj2] = result;
         expect(Object.keys(obj1).length).toBe(4);
         expect(Object.keys(obj2).length).toBe(4);
-        expect(obj1.name).toEqual('Problem one');
-        expect(obj1.solved).toEqual('Yes');
-        expect(obj2.name).toEqual('Problem two');
-        expect(obj2.solved).toEqual('No');
+        expect(obj1.name).toBe('Problem one');
+        expect(obj1.solved).toBe(true);
+        expect(obj2.name).toBe('Problem two');
+        expect(obj2.solved).toBe(false);
     });
 
     it('Returns problems without attempts', () => {
         const latestAttemptsMap = {
             '1': {
                 date: '1/1',
-                solved: 'Yes'
+                solved: true
             }
         };
 
@@ -59,7 +59,7 @@ describe('joinProblemsWithLatestAttempts', () => {
         const latestAttemptsMap = {
             '1': {
                 date: '1/1',
-                solved: 'Yes',
+                solved: true,
                 lcId: 1 // Key also exists in problems
             }
         };
@@ -76,11 +76,11 @@ describe('joinProblemsWithLatestAttempts', () => {
         const latestAttemptsMap = {
             '3': {
                 date: '1/1',
-                solved: 'Yes'
+                solved: true
             },
             '4': {
                 date: '1/1',
-                solved: 'No'
+                solved: false
             }
         };
 
@@ -96,7 +96,7 @@ describe('joinProblemsWithLatestAttempts', () => {
         const latestAttemptsMap = {
             '1': {
                 date: '1/1',
-                solved: 'Yes'
+                solved: true
             }
         };
         const result = joinProblemsWithLatestAttempts([], latestAttemptsMap);

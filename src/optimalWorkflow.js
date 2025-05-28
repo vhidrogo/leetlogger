@@ -1,12 +1,13 @@
+const { NAMED_RANGES } = require("./constants");
 const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
 const { setInputsOnSheetUI } = require("./sheetUtils/setInputsOnSheetUI");
 const { isAttemptDone } = require("./workflowUtils");
 
 /**
- * Marks key attempt evaluation fields as 'Yes' in the UI if the attempt is complete.
+ * Marks key attempt evaluation fields as TRUE in the UI checkboxes if the attempt is complete.
  * 
  * If no attempt is marked as done, displays an alert and exits.
- * Otherwise, sets relevant dropdown fields in the control panel inputs range to 'Yes'.
+ * Otherwise, sets relevant optimal fields in the control panel inputs range to TRUE.
  *
  * @returns {void}
  */
@@ -15,13 +16,12 @@ function onOptimalClick() {
         SpreadsheetApp.getUi().alert('Finish an attempt first before marking optimal.');
         return;
     }
-
-    const inputsRangeName = 'ControlPanel_AttemptDropdownInputs';
-    const inputsMap = getInputsFromSheetUI(inputsRangeName);
+    
+    const inputsMap = getInputsFromSheetUI(NAMED_RANGES.ControlPanel.ATTEMPT_OPTIMAL_INPUTS);
 
     for (const [key] of inputsMap) {
-        inputsMap.set(key, 'Yes');
+        inputsMap.set(key, true);
     }
 
-    setInputsOnSheetUI(inputsRangeName, inputsMap);
+    setInputsOnSheetUI(NAMED_RANGES.ControlPanel.ATTEMPT_OPTIMAL_INPUTS, inputsMap);
 }

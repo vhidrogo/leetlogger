@@ -32,9 +32,9 @@ describe('joinProblemsWithLatestAttempts', () => {
         const [obj1, obj2] = result;
         expect(Object.keys(obj1).length).toBe(4);
         expect(Object.keys(obj2).length).toBe(4);
-        expect(obj1.name).toEqual('Problem one');
+        expect(obj1.name).toBe('Problem one');
         expect(obj1.solved).toBe(true);
-        expect(obj2.name).toEqual('Problem two');
+        expect(obj2.name).toBe('Problem two');
         expect(obj2.solved).toBe(false);
     });
 

@@ -35,7 +35,7 @@ function onSkipClick() {
         return;
     }
     
-    displayProblemListProgress(nextIndex, problems.length);
+    updateSkipCount(nextIndex, problems.length);
     updateCurrentProblem(problems[nextIndex]);
 }
 

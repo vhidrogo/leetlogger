@@ -11,9 +11,9 @@ const { calculateSelectionMetrics } = require("./dataModelUtils/calculateSelecti
  * @param {number} problemIndex - Zero-based index of the current problem in the problem list.
  * @param {number} problemListCount - Total number of problems in the current selection list.
  */
-function displayProblemListProgress(problemIndex, problemListCount) {
-    const text = `${problemIndex + 1} of ${problemListCount}`;
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.PROBLEM_LIST_PROGRESS, text);
+function updateSkipCount(problemIndex, problemListCount) {
+    const text = `Skipped ${problemIndex} of ${problemListCount}`;
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SKIP_COUNT, text);
 }
 
 /**

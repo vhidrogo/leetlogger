@@ -108,7 +108,7 @@ function isAttemptDone() {
 module.exports = {
     updateSelectionMetrics,
     updateCurrentProblem,
-    displayProblemListProgress,
+    updateSkipCount,
     getCurrentProblemLcId,
     isAttemptInProgress,
     isAttemptDone

@@ -6,6 +6,26 @@ const { MODEL_FIELD_MAPPINGS, NAMED_RANGES } = require("./constants");
 const { calculateSelectionMetrics } = require("./dataModelUtils/calculateSelectionMetrics");
 
 /**
+ * Regenerates the problem selection list, updates selection metrics,
+ * clears the skip count display, and displays the next problem.
+ * 
+ * This function is used after workflows where the problem selection 
+ * list may have changed — such as after logging a new attempt or 
+ * initializing a new selection session. Unlike the skip workflow,
+ * this resets skip progress, recalculates metrics based on the 
+ * potentially updated list, and displays the problem at index 0.
+ *
+ * Intended for use in selection workflows where the problem pool 
+ * and associated metrics require refreshing before progression.
+ */
+function restartProblemSelection() {
+    const problems = generateProblemSelectionList();
+    updateSelectionMetrics(problems);
+    updateCurrentProblem(problems[0]);
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SKIP_COUNT, '');
+}
+
+/**
  * Displays the current problem's position within the problem list in the Control Panel.
  *
  * @param {number} problemIndex - Zero-based index of the current problem in the problem list.
@@ -111,5 +131,6 @@ module.exports = {
     updateSkipCount,
     getCurrentProblemLcId,
     isAttemptInProgress,
-    isAttemptDone
+    isAttemptDone,
+    restartProblemSelection
 }

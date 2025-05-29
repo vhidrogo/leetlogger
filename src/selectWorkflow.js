@@ -20,6 +20,6 @@ function onSelectClick() {
     const problemIndex = 0;
     
     updateSelectionMetrics(problems);
-    displayProblemListProgress(problemIndex, problems.length);
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SKIP_COUNT, '');
     updateCurrentProblem(problems[problemIndex]);
 }

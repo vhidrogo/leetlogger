@@ -32,7 +32,15 @@ const NAMED_RANGES = {
         PRIORITIZE_TIME_NOT_OPTIMAL: 'ControlPanel_PrioritizeTimeNotOptimal',
         PRIORITIZE_UNATTEMPTED: 'ControlPanel_PrioritizeUnattempted',
         PRIORITIZE_UNSOLVED: 'ControlPanel_PrioritizeUnsolved',
-        PROBLEM_LIST_PROGRESS: 'ControlPanel_ProblemListProgress'
+        PROBLEM_LIST_PROGRESS: 'ControlPanel_ProblemListProgress',
+        SELECTION_METRICS_NEWEST_ATTEMPT_DATE: 'ControlPanel_SelectionMetricsNewestAttemptDate',
+        SELECTION_METRICS_NOT_QUALITY_CODE: 'ControlPanel_SelectionMetricsNotQualityCode',
+        SELECTION_METRICS_NOT_SOLVED: 'ControlPanel_SelectionMetricsNotSolved',
+        SELECTION_METRICS_OLDEST_ATTEMPT_DATE: 'ControlPanel_SelectionMetricsOldestAttemptDate',
+        SELECTION_METRICS_PROBLEMS: 'ControlPanel_SelectionMetricsProblems',
+        SELECTION_METRICS_SPACE_NOT_OPTIMAL: 'ControlPanel_SelectionMetricsSpaceNotOptimal',
+        SELECTION_METRICS_TIME_NOT_OPTIMAL: 'ControlPanel_SelectionMetricsTimeNotOptimal',
+        SELECTION_METRICS_UNATTEMPTED: 'ControlPanel_SelectionMetricsUnattempted',
     },
     TargetTimes: {
         DIFFICULTY: 'TargetTimesDifficulty',

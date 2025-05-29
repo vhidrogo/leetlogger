@@ -29,7 +29,7 @@ function displayProblemListProgress(problemIndex, problemListCount) {
  * @param {Object} problemAttemptAttributes - An object containing attribute key-value pairs for the selected problem and its latest attempt.
  *                                            Keys should match the input field names in the UI control panel ranges.
  */
-function displayCurrentProblem(problemAttemptAttributes) {
+function updateCurrentProblem(problemAttemptAttributes) {
     const problemAttributesRangeName = 'ControlPanel_CurrentProblem_ProblemAttributes';
     const latestAttemptAttributesRangeName = 'ControlPanel_CurrentProblem_LatestAttemptAttributes'
 
@@ -107,7 +107,7 @@ function isAttemptDone() {
 
 module.exports = {
     updateSelectionMetrics,
-    displayCurrentProblem,
+    updateCurrentProblem,
     displayProblemListProgress,
     getCurrentProblemLcId,
     isAttemptInProgress,

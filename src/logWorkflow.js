@@ -1,4 +1,5 @@
 const { NAMED_RANGES } = require("./constants");
+const { restartProblemSelection } = require("./workflowUtils");
 
 const CONFIG = {
     END_TIME_RANGE_NAME: 'ControlPanel_EndTime',
@@ -9,6 +10,7 @@ const CONFIG = {
 function onLogClick() {
     logAttempt();
     resetAttemptInputs();
+    restartProblemSelection();
 }
 
 function logAttempt() {

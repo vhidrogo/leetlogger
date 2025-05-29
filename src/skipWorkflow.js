@@ -31,8 +31,13 @@ function onSkipClick() {
     try {
         nextIndex = findNextProblemIndex(problems, lcId);
     } catch (e) {
-        SpreadsheetApp.getUi().alert('Current problem does not match selection criteria, select a new problem.');
-        return;
+        if (e instanceof ProblemNotFoundError) {
+            SpreadsheetApp.getUi().alert('Current problem does not match selection criteria, select a new problem.');
+            return;
+        } else if (e instanceof NoMoreProblemsError) {
+            SpreadsheetApp.getUi().alert('No more problems in list. You’ve reached the end.');
+            return;
+        }
     }
     
     updateSkipCount(nextIndex, problems.length);
@@ -55,8 +60,28 @@ function findNextProblemIndex(problemsAttributes, currentLcId) {
     const index = problemsAttributes.findIndex(item => item.lcId === currentLcId);
     
     if (index === -1) {
-        throw new Error('Problem not found in list.');
+        throw new ProblemNotFoundError('Problem not found in list.');
     }
 
-    return (index + 1) % problemsAttributes.length;
+    const nextIndex = index + 1;
+
+    if (nextIndex >= problemsAttributes.length) {
+        throw new NoMoreProblemsError('No more problems in list.');
+    }
+
+    return nextIndex;
+}
+
+class ProblemNotFoundError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'ProblemNotFoundError';
+    }
+}
+
+class NoMoreProblemsError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'NoMoreProblemsError';
+    }
 }

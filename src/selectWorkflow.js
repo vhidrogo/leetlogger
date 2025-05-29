@@ -1,5 +1,5 @@
 const { generateProblemSelectionList } = require("./dataModelUtils/generateProblemSelectionList");
-const { isAttemptInProgress, displayProblemListProgress, updateSelectionMetrics } = require("./workflowUtils");
+const { isAttemptInProgress, displayProblemListProgress, updateCurrentProblem, updateSelectionMetrics } = require("./workflowUtils");
 const { setNamedRangeValue } = require("./sheetUtils/setNamedRangeValue");
 const { NAMED_RANGES } = require("./constants");
 
@@ -20,6 +20,6 @@ function onSelectClick() {
     const problemIndex = 0;
     
     updateSelectionMetrics(problems);
-    displayProblemListProgress(problemIndex, problems.length);
-    displayCurrentProblem(problems[problemIndex]);
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SKIP_COUNT, '');
+    updateCurrentProblem(problems[problemIndex]);
 }

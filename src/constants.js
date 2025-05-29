@@ -32,7 +32,6 @@ const NAMED_RANGES = {
         PRIORITIZE_TIME_NOT_OPTIMAL: 'ControlPanel_PrioritizeTimeNotOptimal',
         PRIORITIZE_UNATTEMPTED: 'ControlPanel_PrioritizeUnattempted',
         PRIORITIZE_UNSOLVED: 'ControlPanel_PrioritizeUnsolved',
-        PROBLEM_LIST_PROGRESS: 'ControlPanel_ProblemListProgress',
         SELECTION_METRICS_NEWEST_ATTEMPT_DATE: 'ControlPanel_SelectionMetricsNewestAttemptDate',
         SELECTION_METRICS_NOT_QUALITY_CODE: 'ControlPanel_SelectionMetricsNotQualityCode',
         SELECTION_METRICS_NOT_SOLVED: 'ControlPanel_SelectionMetricsNotSolved',
@@ -41,6 +40,7 @@ const NAMED_RANGES = {
         SELECTION_METRICS_SPACE_NOT_OPTIMAL: 'ControlPanel_SelectionMetricsSpaceNotOptimal',
         SELECTION_METRICS_TIME_NOT_OPTIMAL: 'ControlPanel_SelectionMetricsTimeNotOptimal',
         SELECTION_METRICS_UNATTEMPTED: 'ControlPanel_SelectionMetricsUnattempted',
+        SKIP_COUNT: 'ControlPanel_SkipCount',
     },
     TargetTimes: {
         DIFFICULTY: 'TargetTimesDifficulty',

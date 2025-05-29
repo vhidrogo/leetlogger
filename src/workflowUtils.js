@@ -11,9 +11,9 @@ const { calculateSelectionMetrics } = require("./dataModelUtils/calculateSelecti
  * @param {number} problemIndex - Zero-based index of the current problem in the problem list.
  * @param {number} problemListCount - Total number of problems in the current selection list.
  */
-function displayProblemListProgress(problemIndex, problemListCount) {
-    const text = `${problemIndex + 1} of ${problemListCount}`;
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.PROBLEM_LIST_PROGRESS, text);
+function updateSkipCount(problemIndex, problemListCount) {
+    const text = `Skipped ${problemIndex} of ${problemListCount}`;
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SKIP_COUNT, text);
 }
 
 /**
@@ -29,7 +29,7 @@ function displayProblemListProgress(problemIndex, problemListCount) {
  * @param {Object} problemAttemptAttributes - An object containing attribute key-value pairs for the selected problem and its latest attempt.
  *                                            Keys should match the input field names in the UI control panel ranges.
  */
-function displayCurrentProblem(problemAttemptAttributes) {
+function updateCurrentProblem(problemAttemptAttributes) {
     const problemAttributesRangeName = 'ControlPanel_CurrentProblem_ProblemAttributes';
     const latestAttemptAttributesRangeName = 'ControlPanel_CurrentProblem_LatestAttemptAttributes'
 
@@ -107,8 +107,8 @@ function isAttemptDone() {
 
 module.exports = {
     updateSelectionMetrics,
-    displayCurrentProblem,
-    displayProblemListProgress,
+    updateCurrentProblem,
+    updateSkipCount,
     getCurrentProblemLcId,
     isAttemptInProgress,
     isAttemptDone

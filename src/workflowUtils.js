@@ -3,6 +3,7 @@ const { setNamedRangeValue } = require("./sheetUtils/setNamedRangeValue");
 const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
 const { setInputsOnSheetUI } = require("./sheetUtils/setInputsOnSheetUI");
 const { MODEL_FIELD_MAPPINGS, NAMED_RANGES } = require("./constants");
+const { calculateSelectionMetrics } = require("./dataModelUtils/calculateSelectionMetrics");
 
 /**
  * Displays the current problem's position within the problem list in the Control Panel.
@@ -50,6 +51,21 @@ function displayCurrentProblem(problemAttemptAttributes) {
     setInputsOnSheetUI(latestAttemptAttributesRangeName, latestAttemptAttributes);
 }
 
+function updateSelectionMetrics(problemAttempts) {
+    if (!problemAttempts.length) return;
+
+    const metrics = calculateSelectionMetrics(problemAttempts);
+
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_PROBLEMS, metrics.totalProblems);
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_UNATTEMPTED, metrics.unattempted);
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_NOT_SOLVED, metrics.notSolved);
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_TIME_NOT_OPTIMAL, metrics.timeNotOptimal);
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_SPACE_NOT_OPTIMAL, metrics.spaceNotOptimal);
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_NOT_QUALITY_CODE, metrics.notQualityCode);
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_OLDEST_ATTEMPT_DATE, metrics.oldestAttemptDate);
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_NEWEST_ATTEMPT_DATE, metrics.newestAttemptDate);
+}
+
 /**
  * Retrieves the current problem's LeetCode ID from the named range.
  * 
@@ -90,6 +106,7 @@ function isAttemptDone() {
 }
 
 module.exports = {
+    updateSelectionMetrics,
     displayCurrentProblem,
     displayProblemListProgress,
     getCurrentProblemLcId,

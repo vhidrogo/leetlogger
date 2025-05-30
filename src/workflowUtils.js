@@ -4,6 +4,7 @@ const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
 const { setInputsOnSheetUI } = require("./sheetUtils/setInputsOnSheetUI");
 const { MODEL_FIELD_MAPPINGS, NAMED_RANGES } = require("./constants");
 const { calculateSelectionMetrics } = require("./dataModelUtils/calculateSelectionMetrics");
+const { formatTimeSince } = require("./utils/formatTimeSince");
 
 /**
  * Regenerates the problem selection list, updates selection metrics,
@@ -69,6 +70,11 @@ function updateCurrentProblem(problemAttemptAttributes) {
         latestAttemptAttributes.set(key, newValue);
     }
     setInputsOnSheetUI(latestAttemptAttributesRangeName, latestAttemptAttributes);
+
+    if (problemAttemptAttributes.startTime) {
+        const timeSince = formatTimeSince(problemAttemptAttributes.startTime);
+        setNamedRangeValue(NAMED_RANGES.ControlPanel.TIME_SINCE_CURRENT_PROBLEM, timeSince);
+    }
 }
 
 function updateSelectionMetrics(problemAttempts) {
@@ -82,8 +88,12 @@ function updateSelectionMetrics(problemAttempts) {
     setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_TIME_NOT_OPTIMAL, metrics.timeNotOptimal);
     setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_SPACE_NOT_OPTIMAL, metrics.spaceNotOptimal);
     setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_NOT_QUALITY_CODE, metrics.notQualityCode);
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_OLDEST_ATTEMPT_DATE, metrics.oldestAttemptDate);
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_NEWEST_ATTEMPT_DATE, metrics.newestAttemptDate);
+    setNamedRangeValue(
+        NAMED_RANGES.ControlPanel.SELECTION_METRICS_OLDEST_ATTEMPT, formatTimeSince(metrics.oldestAttemptDate)
+    );
+    setNamedRangeValue(
+        NAMED_RANGES.ControlPanel.SELECTION_METRICS_NEWEST_ATTEMPT, formatTimeSince(metrics.newestAttemptDate)
+    );
 }
 
 /**

@@ -22,8 +22,13 @@ const { formatTimeSince } = require("./utils/formatTimeSince");
 function restartProblemSelection() {
     const problems = generateProblemSelectionList();
     updateSelectionMetrics(problems);
-    updateCurrentProblem(problems[0]);
     setNamedRangeValue(NAMED_RANGES.ControlPanel.SKIP_COUNT, '');
+
+    if (problems.length) {
+        updateCurrentProblem(problems[0]);
+    } else {
+        clearCurrentProblem();
+    }
 }
 
 /**
@@ -51,25 +56,24 @@ function updateSkipCount(problemIndex, problemListCount) {
  *                                            Keys should match the input field names in the UI control panel ranges.
  */
 function updateCurrentProblem(problemAttemptAttributes) {
-    const problemAttributesRangeName = 'ControlPanel_CurrentProblem_ProblemAttributes';
-    const latestAttemptAttributesRangeName = 'ControlPanel_CurrentProblem_LatestAttemptAttributes'
-
-    const problemAttributes = getInputsFromSheetUI(problemAttributesRangeName);
+    const problemAttributes = getInputsFromSheetUI(NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_ATTRIBUTES);
     for (const key of problemAttributes.keys()) {
         const fieldKey = MODEL_FIELD_MAPPINGS.Problem[key];
         if (problemAttemptAttributes.hasOwnProperty(fieldKey)) {
             problemAttributes.set(key, problemAttemptAttributes[fieldKey]);
         }
     }
-    setInputsOnSheetUI(problemAttributesRangeName, problemAttributes);
+    setInputsOnSheetUI(NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_ATTRIBUTES, problemAttributes);
 
-    const latestAttemptAttributes = getInputsFromSheetUI(latestAttemptAttributesRangeName);
+    const latestAttemptAttributes = getInputsFromSheetUI(
+        NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_LATEST_ATTEMPT_ATTRIBUTES
+    );
     for (const key of latestAttemptAttributes.keys()) {
         const fieldKey = MODEL_FIELD_MAPPINGS.Attempt[key];
         const newValue = problemAttemptAttributes[fieldKey] ?? '';
         latestAttemptAttributes.set(key, newValue);
     }
-    setInputsOnSheetUI(latestAttemptAttributesRangeName, latestAttemptAttributes);
+    setInputsOnSheetUI(NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_LATEST_ATTEMPT_ATTRIBUTES, latestAttemptAttributes);
 
     if (problemAttemptAttributes.startTime) {
         const timeSince = formatTimeSince(problemAttemptAttributes.startTime);
@@ -77,9 +81,23 @@ function updateCurrentProblem(problemAttemptAttributes) {
     }
 }
 
-function updateSelectionMetrics(problemAttempts) {
-    if (!problemAttempts.length) return;
+/**
+ * Clears the currently selected problem's attributes and latest attempt details from the UI.
+ *
+ * Resets all input fields in both the problem attributes and latest attempt attributes sections
+ * of the control panel to their default (empty) state. Additionally, clears the value displayed for
+ * the "time since current problem" field in the control panel.
+ *
+ * This is typically used when no problem is actively selected or when transitioning between problems
+ * to ensure no residual data is displayed.
+ */
+function clearCurrentProblem() {
+    resetInputValues(NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_ATTRIBUTES);
+    resetInputValues(NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_LATEST_ATTEMPT_ATTRIBUTES);
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.TIME_SINCE_CURRENT_PROBLEM, '');
+}
 
+function updateSelectionMetrics(problemAttempts) {
     const metrics = calculateSelectionMetrics(problemAttempts);
 
     setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_PROBLEMS, metrics.totalProblems);
@@ -88,12 +106,10 @@ function updateSelectionMetrics(problemAttempts) {
     setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_TIME_NOT_OPTIMAL, metrics.timeNotOptimal);
     setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_SPACE_NOT_OPTIMAL, metrics.spaceNotOptimal);
     setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_NOT_QUALITY_CODE, metrics.notQualityCode);
-    setNamedRangeValue(
-        NAMED_RANGES.ControlPanel.SELECTION_METRICS_OLDEST_ATTEMPT, formatTimeSince(metrics.oldestAttemptDate)
-    );
-    setNamedRangeValue(
-        NAMED_RANGES.ControlPanel.SELECTION_METRICS_NEWEST_ATTEMPT, formatTimeSince(metrics.newestAttemptDate)
-    );
+    const oldestAttempt = metrics.oldestAttemptDate ? formatTimeSince(metrics.oldestAttemptDate) : 'None';
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_OLDEST_ATTEMPT, oldestAttempt);
+    const newestAttempt = metrics.newestAttemptDate ? formatTimeSince(metrics.newestAttemptDate) : 'None';
+    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_NEWEST_ATTEMPT, newestAttempt);
 }
 
 /**

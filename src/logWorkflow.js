@@ -19,10 +19,6 @@ function logAttempt() {
         'Start Time',
         'End Time',
         'Duration Minutes',
-        'Solved',
-        'Time Complexity Optimal',
-        'Space Complexity Optimal',
-        'Quality Code'
     ];
 
     const inputValues = getInputValues(CONFIG.INPUTS_RANGE_NAME, requiredFields);

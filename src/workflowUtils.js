@@ -78,6 +78,8 @@ function updateCurrentProblem(problemAttemptAttributes) {
     if (problemAttemptAttributes.startTime) {
         const timeSince = formatTimeSince(problemAttemptAttributes.startTime);
         setNamedRangeValue(NAMED_RANGES.ControlPanel.TIME_SINCE_CURRENT_PROBLEM, timeSince);
+    } else {
+        setNamedRangeValue(NAMED_RANGES.ControlPanel.TIME_SINCE_CURRENT_PROBLEM, 'Unattempted');
     }
 }
 

@@ -31,10 +31,6 @@ function resetAttemptInputs() {
         'LC ID',
         'Start Time',
         'End Time',
-        'Solved',
-        'Time Complexity Optimal',
-        'Space Complexity Optimal',
-        'Quality Code',
         'Notes'
     ]
 
@@ -48,7 +44,11 @@ function resetAttemptInputs() {
                 0
             ),
             1
-        )`
+        )`,
+        'Solved': false,
+        'Time Complexity Optimal': false,
+        'Space Complexity Optimal': false,
+        'Quality Code': false,
     }
 
     resetInputValues(CONFIG.INPUTS_RANGE_NAME, defaults, clearFields)

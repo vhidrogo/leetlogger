@@ -57,9 +57,9 @@ function problemAttemptComparator(a, b, config) {
  */
 function hasNotOptimalAndPrioritized(item, config) {
   return [
-    !item.timeComplexityOptimal && config.prioritizeTimeNotOptimal,
-    !item.spaceComplexityOptimal && config.prioritizeSpaceNotOptimal,
-    !item.qualityCode && config.prioritizeCodeQualityNotOptimal
+    item.timeComplexityOptimal === false && config.prioritizeTimeNotOptimal,
+    item.spaceComplexityOptimal === false && config.prioritizeSpaceNotOptimal,
+    item.qualityCode === false && config.prioritizeCodeQualityNotOptimal
   ].some(Boolean);
 }
 

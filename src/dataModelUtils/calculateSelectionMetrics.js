@@ -41,10 +41,10 @@ function calculateSelectionMetrics(problemAttempts) {
             unattemptedCount ++;
             continue;
         }
-        if (!problem.solved) notSolvedCount++;
-        if (!problem.timeComplexityOptimal) timeNotOptimalCount++;
-        if (!problem.spaceComplexityOptimal) spaceNotOptimalCount++;
-        if (!problem.qualityCode) notQualityCodeCount++;
+        if (problem.solved === false) notSolvedCount++;
+        if (problem.timeComplexityOptimal === false) timeNotOptimalCount++;
+        if (problem.spaceComplexityOptimal === false) spaceNotOptimalCount++;
+        if (problem.qualityCode === false) notQualityCodeCount++;
 
         const problemDate = new Date(problem.startTime);
 
@@ -57,27 +57,13 @@ function calculateSelectionMetrics(problemAttempts) {
     return {
         totalProblems: problemAttempts.length,
         unattempted: unattemptedCount,
-        notSolved: calculatePercent(notSolvedCount, attemptedCount),
-        timeNotOptimal: calculatePercent(timeNotOptimalCount, attemptedCount),
-        spaceNotOptimal: calculatePercent(spaceNotOptimalCount, attemptedCount),
-        notQualityCode: calculatePercent(notQualityCodeCount, attemptedCount),
+        notSolved: notSolvedCount,
+        timeNotOptimal: timeNotOptimalCount,
+        spaceNotOptimal: spaceNotOptimalCount,
+        notQualityCode: notQualityCodeCount,
         oldestAttemptDate: oldestAttemptDate,
         newestAttemptDate: newestAttemptDate,
     }
-}
-
-/**
- * Calculates a percentage value from a count and total attempted count.
- *
- * Returns 0 if no attempts were made or if metric count is zero.
- *
- * @param {number} metricCount - The count of problems matching the metric.
- * @param {number} attemptedCount - The total number of attempted problems.
- * @returns {number} The computed percentage (as a fraction between 0 and 1).
- */
-function calculatePercent(metricCount, attemptedCount) {
-    if (attemptedCount === 0 || metricCount === 0) return 0;
-    return metricCount / attemptedCount;
 }
 
 module.exports = { calculateSelectionMetrics }

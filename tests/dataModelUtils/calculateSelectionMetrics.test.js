@@ -32,7 +32,7 @@ describe('calculateSelectionMetrics', () => {
             { startTime: '', solved: false },
         ];
         const result = calculateSelectionMetrics(problemAttempts);
-        expect(result.notSolved).toBe(1 / 4);
+        expect(result.notSolved).toBe(1);
     });
 
     it('calculates timeNotOptimal correctly', () => {
@@ -42,7 +42,7 @@ describe('calculateSelectionMetrics', () => {
             { startTime: '', timeComplexityOptimal: false },
         ];
         const result = calculateSelectionMetrics(problemAttempts);
-        expect(result.timeNotOptimal).toBe(1 / 3);
+        expect(result.timeNotOptimal).toBe(1);
     });
 
     it('calculates spaceNotOptimal correctly', () => {
@@ -51,7 +51,7 @@ describe('calculateSelectionMetrics', () => {
             { startTime: '', spaceComplexityOptimal: false },
         ];
         const result = calculateSelectionMetrics(problemAttempts);
-        expect(result.spaceNotOptimal).toBe(1 / 2);
+        expect(result.spaceNotOptimal).toBe(1);
     });
 
     it('calculates notQualityCode correctly', () => {

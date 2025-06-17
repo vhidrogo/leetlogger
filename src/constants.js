@@ -45,6 +45,10 @@ const NAMED_RANGES = {
         SKIP_COUNT: 'ControlPanel_SkipCount',
         TIME_SINCE_CURRENT_PROBLEM: 'ControlPanel_TimeSinceCurrentProblem',
     },
+    LatestAttempts: {
+        ATTEMPTS: 'LatestAttempts_Attempts',
+        COUNT: 'LatestAttempts_Count',
+    },
     TargetTimes: {
         DIFFICULTY: 'TargetTimesDifficulty',
         MAX_MINUTES: 'TargetTimesMaxMinutes',

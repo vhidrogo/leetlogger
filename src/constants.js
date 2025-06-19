@@ -1,3 +1,15 @@
+const DOMINANT_TOPICS = [
+    'Backtracking',
+    'Binary Search',
+    'Breadth-First Search',
+    'Depth-First Search',
+    'Dynamic Programming',
+    'Greedy Algorithms',
+    'Prefix Sum',
+    'Sliding Window',
+    'Two-Pointer',
+]
+
 const MODEL_FIELD_MAPPINGS = {
     Problem: {
         'LC ID': 'lcId',
@@ -45,6 +57,12 @@ const NAMED_RANGES = {
         SKIP_COUNT: 'ControlPanel_SkipCount',
         TIME_SINCE_CURRENT_PROBLEM: 'ControlPanel_TimeSinceCurrentProblem',
     },
+    DifficultyCounts: {
+        COUNTS: 'DifficultyCounts_Counts',
+        DIFFICULTY: 'DifficultyCounts_Difficulty',
+        ORDER: 'DifficultyCounts_Order',
+        TIMEFRAME: 'DifficultyCounts_Timeframe',
+    },
     LatestAttempts: {
         ATTEMPTS: 'LatestAttempts_Attempts',
         COUNT: 'LatestAttempts_Count',
@@ -56,4 +74,8 @@ const NAMED_RANGES = {
     }
 }
 
-module.exports = { MODEL_FIELD_MAPPINGS, NAMED_RANGES }
+module.exports = {
+    DOMINANT_TOPICS,
+    MODEL_FIELD_MAPPINGS,
+    NAMED_RANGES,
+ }

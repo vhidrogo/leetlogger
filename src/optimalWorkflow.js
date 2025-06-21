@@ -17,11 +17,11 @@ function onOptimalClick() {
         return;
     }
     
-    const inputsMap = getInputsFromSheetUI(NAMED_RANGES.ControlPanel.ATTEMPT_OPTIMAL_INPUTS);
+    const inputsMap = getInputsFromSheetUI(NAMED_RANGES.AttemptInProgress.OPTIMAL_INPUTS);
 
     for (const [key] of inputsMap) {
         inputsMap.set(key, true);
     }
 
-    setInputsOnSheetUI(NAMED_RANGES.ControlPanel.ATTEMPT_OPTIMAL_INPUTS, inputsMap);
+    setInputsOnSheetUI(NAMED_RANGES.AttemptInProgress.OPTIMAL_INPUTS, inputsMap);
 }

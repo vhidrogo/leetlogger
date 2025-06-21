@@ -18,3 +18,5 @@ function getInputValues(rangeName, requiredFields) {
 
     return Array.from(inputsMap.values());
 }
+
+module.exports = { getInputValues }

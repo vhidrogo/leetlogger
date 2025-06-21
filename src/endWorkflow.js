@@ -1,5 +1,6 @@
 const { isAttemptDone, isAttemptInProgress } = require("./workflowUtils");
 const { setNamedRangeValue } = require("./sheetUtils/setNamedRangeValue");
+const { NAMED_RANGES } = require("./constants");
 
 function onEndClick() {
     if (!isAttemptInProgress()) {
@@ -12,5 +13,5 @@ function onEndClick() {
         return;
     }
 
-    setNamedRangeValue('ControlPanel_EndTime', new Date());
+    setNamedRangeValue(NAMED_RANGES.AttemptInProgress.END_TIME, new Date());
 }

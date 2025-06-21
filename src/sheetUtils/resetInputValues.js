@@ -21,3 +21,5 @@ function resetInputValues(rangeName, defaultsMap = {}, subsetFields = []) {
 
     setInputsOnSheetUI(rangeName, inputsMap);
 }
+
+module.exports = { resetInputValues }

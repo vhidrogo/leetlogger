@@ -36,7 +36,11 @@ const MODEL_FIELD_MAPPINGS = {
 
 const NAMED_RANGES = {
     AttemptInProgress: {
+        DIFFICULTY: 'AttemptInprogress_Difficulty',
+        DOMINANT_TOPIC: 'AttemptInProgress_DominantTopic',
         END_TIME: 'AttemptInProgress_EndTime',
+        INPUTS: 'AttemptInProgress_AttemptInputs',
+        OPTIMAL_INPUTS: 'AttemptInProgress_OptimalInputs',
         PROBLEM_ATTRIBUTES: 'AttemptInProgress_ProblemAttributes',
         PROGRESS: 'AttemptInProgress_Progress',
         START_TIME: 'AttemptInProgress_StartTime',
@@ -90,6 +94,7 @@ const NAMED_RANGES = {
 }
 
 const SHEET_NAMES = {
+    ATTEMPTS: 'Attempts',
     ATTEMPT_IN_PROGRESS: 'AttemptInProgress',
 }
 

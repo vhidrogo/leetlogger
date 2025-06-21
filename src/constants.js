@@ -35,6 +35,12 @@ const MODEL_FIELD_MAPPINGS = {
 }
 
 const NAMED_RANGES = {
+    AttemptInProgress: {
+        END_TIME: 'AttemptInProgress_EndTime',
+        PROBLEM_ATTRIBUTES: 'AttemptInProgress_ProblemAttributes',
+        PROGRESS: 'AttemptInProgress_Progress',
+        START_TIME: 'AttemptInProgress_StartTime',
+    },
     ControlPanel: {
         ATTEMPT_OPTIMAL_INPUTS: 'ControlPanel_AttemptOptimalInputs',
         CURRENT_PROBLEM_ATTRIBUTES: 'ControlPanel_CurrentProblem_ProblemAttributes',
@@ -63,6 +69,9 @@ const NAMED_RANGES = {
         ORDER: 'DifficultyCounts_Order',
         TIMEFRAME: 'DifficultyCounts_Timeframe',
     },
+    GroupSelection: {
+        PROBLEM_ATTRIBUTES: 'GroupSelection_ProblemAttributes',
+    },
     LatestAttempts: {
         ATTEMPTS: 'LatestAttempts_Attempts',
         COUNT: 'LatestAttempts_Count',
@@ -71,7 +80,6 @@ const NAMED_RANGES = {
         LATEST_ATTEMPT_ATTRIBUTES: 'SingleSelection_LatestAttemptAttributes',
         PROBLEM_ATTRIBUTES: 'SingleSelection_ProblemAttributes',
         PROBLEM_SEARCH_INPUTS: 'SingleSelection_ProblemSearchInputs',
-        SELECTED_LC_ID: 'SingleSelection_SelectedLCID',
         TIME_SINCE: 'SingleSelection_TimeSince',
     },
     TargetTimes: {
@@ -81,8 +89,13 @@ const NAMED_RANGES = {
     }
 }
 
+const SHEET_NAMES = {
+    ATTEMPT_IN_PROGRESS: 'AttemptInProgress',
+}
+
 module.exports = {
     DOMINANT_TOPICS,
     MODEL_FIELD_MAPPINGS,
     NAMED_RANGES,
+    SHEET_NAMES,
  }

@@ -67,6 +67,13 @@ const NAMED_RANGES = {
         ATTEMPTS: 'LatestAttempts_Attempts',
         COUNT: 'LatestAttempts_Count',
     },
+    SingleSelection: {
+        LATEST_ATTEMPT_ATTRIBUTES: 'SingleSelection_LatestAttemptAttributes',
+        PROBLEM_ATTRIBUTES: 'SingleSelection_ProblemAttributes',
+        PROBLEM_SEARCH_INPUTS: 'SingleSelection_ProblemSearchInputs',
+        SELECTED_LC_ID: 'SingleSelection_SelectedLCID',
+        TIME_SINCE: 'SingleSelection_TimeSince',
+    },
     TargetTimes: {
         DIFFICULTY: 'TargetTimesDifficulty',
         MAX_MINUTES: 'TargetTimesMaxMinutes',

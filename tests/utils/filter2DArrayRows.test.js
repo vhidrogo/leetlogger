@@ -1,54 +1,55 @@
 const { filter2DArrayRows } = require('../../src/utils/filter2DArrayRows');
 
 const dummyData = [
-  ['LC ID', 'Dominant Topic', 'Difficulty', 'Input Data Structure'],
-  [1, 'Two-Pointer', 'Easy', 'Array'],
-  [2, 'Two-Pointer', 'Easy', 'String'],
-  [3, 'Binary Search', 'Easy', 'Array'],
-  [4, 'Binary Search', 'Medium', 'Array']
+  ['LC ID', 'Dominant Topic', 'Difficulty',],
+  [1, 'Two-Pointer', 'Easy'],
+  [2, 'Two-Pointer', 'Medium'],
 ];
 
 describe('filter2DArrayRows', () => {
-  it('filters no wildcards', () => {
-    const criteria = {
-      'Dominant Topic': 'Two-Pointer',
-      'Difficulty': 'Easy',
-      'Input Data Structure': 'Array'
-    };
+  it('filters with equals', () => {
+    const criteria = [{ field: 'LC ID', value: 1, mode: 'equals' }]
     const result = filter2DArrayRows(dummyData, criteria);
-    console.log(result);
     expect(result).toEqual([
-      ['LC ID', 'Dominant Topic', 'Difficulty', 'Input Data Structure'],
-      [1, 'Two-Pointer', 'Easy', 'Array']
+      ['LC ID', 'Dominant Topic', 'Difficulty'],
+      [1, 'Two-Pointer', 'Easy'],
+    ])
+  });
+
+  it('filters with includes', () => {
+    const criteria = [{ field: 'Dominant Topic', value: 'Two', mode: 'includes' }]
+    const result = filter2DArrayRows(dummyData, criteria);
+    expect(result).toEqual([
+      ['LC ID', 'Dominant Topic', 'Difficulty'],
+      [1, 'Two-Pointer', 'Easy'],
+      [2, 'Two-Pointer', 'Medium'],
+    ])
+  });
+
+  it('filters with multiple criteria', () => {
+    const criteria = [
+      { field: 'Dominant Topic', value: 'Two', mode: 'includes' },
+      { field: 'Difficulty', value: 'Easy', mode: 'equals' },
+    ]
+    const result = filter2DArrayRows(dummyData, criteria);
+    expect(result).toEqual([
+      ['LC ID', 'Dominant Topic', 'Difficulty'],
+      [1, 'Two-Pointer', 'Easy'],
+    ])
+  });
+
+  it('handles case-insensitive matches', () => {
+    const criteria = [{ field: 'Dominant Topic', value: 'two-pointer', mode: 'equals' }]
+    const result = filter2DArrayRows(dummyData, criteria);
+    expect(result).toEqual([
+      ['LC ID', 'Dominant Topic', 'Difficulty'],
+      [1, 'Two-Pointer', 'Easy'],
+      [2, 'Two-Pointer', 'Medium'],
     ]);
   });
 
-  it('filters all wildcards', () => {
-    const criteria = {
-      'Dominant Topic': 'All',
-      'Difficulty': 'All',
-      'Input Data Structure': 'All'
-    };
-    const result = filter2DArrayRows(dummyData, criteria);
-    expect(result.length).toBe(5);
-  });
-
-  it('filters with one wildcard', () => {
-    const criteria = {
-      'Dominant Topic': 'All',
-      'Difficulty': 'Easy',
-      'Input Data Structure': 'Array'
-    };
-    const result = filter2DArrayRows(dummyData, criteria);
-    expect(result.length).toBe(3);
-  });
-
   it('returns empty array when no match', () => {
-    const criteria = {
-      'Dominant Topic': 'Graph',
-      'Difficulty': 'Hard',
-      'Input Data Structure': 'Array'
-    };
+    const criteria = [{ field: 'LC ID', value: 9, mode: 'equals' }]
     const result = filter2DArrayRows(dummyData, criteria);
     expect(result.length).toBe(0);
   });
@@ -58,10 +59,7 @@ describe('filter2DArrayRows', () => {
       ['ID', 'Topic'],
       [1, 'Array']
     ];
-    const criteria = {
-      'Dominant Topic': 'All',
-      'Difficulty': 'All'
-    };
+    const criteria = [{ field: 'Dominant Topic', value: 1, mode: 'equals' }]
 
     expect(() => {
       filter2DArrayRows(invalidData, criteria);

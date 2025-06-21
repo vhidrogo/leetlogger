@@ -22,20 +22,20 @@ const { formatTimeSince } = require("./utils/formatTimeSince");
 function restartProblemSelection() {
     const problems = generateProblemSelectionList();
     updateSelectionMetrics(problems);
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.SKIP_COUNT, '');
+    setNamedRangeValue(NAMED_RANGES.GroupSelection.SKIP_COUNT, '');
 
     if (problems.length) {
         updateCurrentProblem(
             problems[0],
-            NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_ATTRIBUTES,
-            NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_LATEST_ATTEMPT_ATTRIBUTES,
-            NAMED_RANGES.ControlPanel.TIME_SINCE_CURRENT_PROBLEM
+            NAMED_RANGES.GroupSelection.PROBLEM_ATTRIBUTES,
+            NAMED_RANGES.GroupSelection.LATEST_ATTEMPT_ATTRIBUTES,
+            NAMED_RANGES.GroupSelection.TIME_SINCE_CURRENT_PROBLEM
         );
     } else {
         clearCurrentProblem(
-            NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_ATTRIBUTES,
-            NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_LATEST_ATTEMPT_ATTRIBUTES,
-            NAMED_RANGES.ControlPanel.TIME_SINCE_CURRENT_PROBLEM
+            NAMED_RANGES.GroupSelection.PROBLEM_ATTRIBUTES,
+            NAMED_RANGES.GroupSelection.LATEST_ATTEMPT_ATTRIBUTES,
+            NAMED_RANGES.GroupSelection.TIME_SINCE_CURRENT_PROBLEM
         );
     }
 }
@@ -48,7 +48,7 @@ function restartProblemSelection() {
  */
 function updateSkipCount(problemIndex, problemListCount) {
     const text = `Skipped ${problemIndex} of ${problemListCount}`;
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.SKIP_COUNT, text);
+    setNamedRangeValue(NAMED_RANGES.GroupSelection.SKIP_COUNT, text);
 }
 
 /**
@@ -118,16 +118,16 @@ function clearCurrentProblem(problemAttributesRangeName, latestAttemptsRangeName
 function updateSelectionMetrics(problemAttempts) {
     const metrics = calculateSelectionMetrics(problemAttempts);
 
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_PROBLEMS, metrics.totalProblems);
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_UNATTEMPTED, metrics.unattempted);
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_NOT_SOLVED, metrics.notSolved);
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_TIME_NOT_OPTIMAL, metrics.timeNotOptimal);
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_SPACE_NOT_OPTIMAL, metrics.spaceNotOptimal);
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_NOT_QUALITY_CODE, metrics.notQualityCode);
+    setNamedRangeValue(NAMED_RANGES.GroupSelection.SELECTION_METRICS_PROBLEMS, metrics.totalProblems);
+    setNamedRangeValue(NAMED_RANGES.GroupSelection.SELECTION_METRICS_UNATTEMPTED, metrics.unattempted);
+    setNamedRangeValue(NAMED_RANGES.GroupSelection.SELECTION_METRICS_NOT_SOLVED, metrics.notSolved);
+    setNamedRangeValue(NAMED_RANGES.GroupSelection.SELECTION_METRICS_TIME_NOT_OPTIMAL, metrics.timeNotOptimal);
+    setNamedRangeValue(NAMED_RANGES.GroupSelection.SELECTION_METRICS_SPACE_NOT_OPTIMAL, metrics.spaceNotOptimal);
+    setNamedRangeValue(NAMED_RANGES.GroupSelection.SELECTION_METRICS_NOT_QUALITY_CODE, metrics.notQualityCode);
     const oldestAttempt = metrics.oldestAttemptDate ? formatTimeSince(metrics.oldestAttemptDate) : 'None';
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_OLDEST_ATTEMPT, oldestAttempt);
+    setNamedRangeValue(NAMED_RANGES.GroupSelection.SELECTION_METRICS_OLDEST_ATTEMPT, oldestAttempt);
     const newestAttempt = metrics.newestAttemptDate ? formatTimeSince(metrics.newestAttemptDate) : 'None';
-    setNamedRangeValue(NAMED_RANGES.ControlPanel.SELECTION_METRICS_NEWEST_ATTEMPT, newestAttempt);
+    setNamedRangeValue(NAMED_RANGES.GroupSelection.SELECTION_METRICS_NEWEST_ATTEMPT, newestAttempt);
 }
 
 /**

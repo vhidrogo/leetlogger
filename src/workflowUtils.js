@@ -169,6 +169,49 @@ function isAttemptDone() {
     return getNamedRangeValue(NAMED_RANGES.AttemptInProgress.END_TIME) != '';
 }
 
+/**
+ * Resets the Attempt In Progress UI input fields to their default state.
+ *
+ * - Clears specified fields (`Start Time`, `End Time`, `Notes`) from the Attempt In Progress inputs.
+ * - Sets default values for calculated fields:
+ *   - `Duration Minutes` is set as the difference between `END_TIME` and `START_TIME` in minutes.
+ *   - `Cap Minutes` is dynamically calculated based on the selected dominant topic and difficulty.
+ *   - Boolean fields (`Solved`, `Time Complexity Optimal`, `Space Complexity Optimal`, `Quality Code`) are reset to `false`.
+ * - Resets all problem attribute fields in the Attempt In Progress section.
+ *
+ * @returns {void}
+ */
+function resetAttemptInputs() {
+    const clearFields = [
+        'Start Time',
+        'End Time',
+        'Notes'
+    ]
+
+    const defaults = {
+        'Duration Minutes': `=if(
+            ${NAMED_RANGES.AttemptInProgress.END_TIME}="","",
+            (${NAMED_RANGES.AttemptInProgress.END_TIME}-${NAMED_RANGES.AttemptInProgress.START_TIME})*1440
+            )`,
+        'Cap Minutes': `=iferror(index(
+            ${NAMED_RANGES.TargetTimes.MAX_MINUTES},
+            match(
+                ${NAMED_RANGES.AttemptInProgress.DOMINANT_TOPIC}&${NAMED_RANGES.AttemptInProgress.DIFFICULTY},
+                ${NAMED_RANGES.TargetTimes.TOPIC}&${NAMED_RANGES.TargetTimes.DIFFICULTY},
+                0
+            ),
+            1
+        ),"")`,
+        'Solved': false,
+        'Time Complexity Optimal': false,
+        'Space Complexity Optimal': false,
+        'Quality Code': false,
+    }
+
+    resetInputValues(NAMED_RANGES.AttemptInProgress.INPUTS, defaults, clearFields);
+    resetInputValues(NAMED_RANGES.AttemptInProgress.PROBLEM_ATTRIBUTES);
+}
+
 module.exports = {
     clearCurrentProblem,
     updateSelectionMetrics,
@@ -177,5 +220,6 @@ module.exports = {
     getCurrentProblemLcId,
     isAttemptInProgress,
     isAttemptDone,
+    resetAttemptInputs,
     restartProblemSelection
 }

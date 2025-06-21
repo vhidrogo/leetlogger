@@ -1,3 +1,4 @@
+const { NAMED_RANGES } = require("./constants");
 const { generateProblemSelectionList } = require("./dataModelUtils/generateProblemSelectionList");
 const { isAttemptInProgress, getCurrentProblemLcId, updateCurrentProblem, updateSkipCount } = require("./workflowUtils");
 
@@ -41,7 +42,12 @@ function onSkipClick() {
     }
     
     updateSkipCount(nextIndex, problems.length);
-    updateCurrentProblem(problems[nextIndex]);
+    updateCurrentProblem(
+        problems[nextIndex],
+        NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_ATTRIBUTES,
+        NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_LATEST_ATTEMPT_ATTRIBUTES,
+        NAMED_RANGES.ControlPanel.TIME_SINCE_CURRENT_PROBLEM
+    );
 }
 
 /**

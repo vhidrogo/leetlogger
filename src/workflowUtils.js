@@ -136,8 +136,8 @@ function updateSelectionMetrics(problemAttempts) {
  * @throws {Error} If no LC ID is found in the named range.
  * @returns {string} The LeetCode ID of the currently selected problem.
  */
-function getCurrentProblemLcId() {
-    const lcId = getNamedRangeValue('ControlPanel_CurrentProblem_LC_ID');
+function getCurrentProblemLcId(rangeName) {
+    const lcId = getNamedRangeValue(rangeName);
     if (!lcId) {
         throw new Error('Missing LC ID.');
     }
@@ -148,25 +148,25 @@ function getCurrentProblemLcId() {
 /**
  * Checks whether a LeetLogger problem attempt is currently in progress.
  *
- * This is determined by checking if the 'ControlPanel_StartTime' named range
+ * This is determined by checking if the progress value named range
  * in the sheet has a non-empty value.
  *
  * @returns {boolean} True if an attempt is in progress, false otherwise.
  */
 function isAttemptInProgress() {
-    return getNamedRangeValue('ControlPanel_StartTime') != '';
+    return getNamedRangeValue(NAMED_RANGES.AttemptInProgress.PROGRESS) != '';
 }
 
 /**
  * Checks whether the current LeetLogger problem attempt has been completed.
  *
- * This is determined by checking if the 'ControlPanel_EndTime' named range
+ * This is determined by checking if the end time value named range
  * in the sheet has a non-empty value.
  *
  * @returns {boolean} True if the attempt is complete, false otherwise.
  */
 function isAttemptDone() {
-    return getNamedRangeValue('ControlPanel_EndTime') != '';
+    return getNamedRangeValue(NAMED_RANGES.AttemptInProgress.END_TIME) != '';
 }
 
 module.exports = {

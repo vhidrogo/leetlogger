@@ -16,11 +16,11 @@ const { problemAttemptComparator } = require("./problemAttemptComparator");
  */
 function sortProblemAttempts(problemAttempts) {
     const config = {
-        prioritizeUnattempted: getNamedRangeValue(NAMED_RANGES.ControlPanel.PRIORITIZE_UNATTEMPTED),
-        prioritizeUnsolved: getNamedRangeValue(NAMED_RANGES.ControlPanel.PRIORITIZE_UNSOLVED),
-        prioritizeTimeNotOptimal: getNamedRangeValue(NAMED_RANGES.ControlPanel.PRIORITIZE_TIME_NOT_OPTIMAL),
-        prioritizeSpaceNotOptimal: getNamedRangeValue(NAMED_RANGES.ControlPanel.PRIORITIZE_SPACE_NOT_OPTIMAL),
-        prioritizeCodeQualityNotOptimal: getNamedRangeValue(NAMED_RANGES.ControlPanel.PRIORITIZE_NOT_QUALITY_CODE)
+        prioritizeUnattempted: getNamedRangeValue(NAMED_RANGES.GroupSelection.PRIORITIZE_UNATTEMPTED),
+        prioritizeUnsolved: getNamedRangeValue(NAMED_RANGES.GroupSelection.PRIORITIZE_UNSOLVED),
+        prioritizeTimeNotOptimal: getNamedRangeValue(NAMED_RANGES.GroupSelection.PRIORITIZE_TIME_NOT_OPTIMAL),
+        prioritizeSpaceNotOptimal: getNamedRangeValue(NAMED_RANGES.GroupSelection.PRIORITIZE_SPACE_NOT_OPTIMAL),
+        prioritizeCodeQualityNotOptimal: getNamedRangeValue(NAMED_RANGES.GroupSelection.PRIORITIZE_NOT_QUALITY_CODE)
     }
     
     problemAttempts.sort((a, b) => problemAttemptComparator(a, b, config));

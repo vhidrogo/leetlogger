@@ -1,15 +1,14 @@
 const { convert2DArrayToObjects } = require("../utils/convert2DArrayToObjects");
 const { getModelDataFromSheet } = require("../sheetUtils/getModelDataFromSheet");
+const { NAMED_RANGES } = require("../constants");
+const { getInputsFromSheetUI } = require("../sheetUtils/getInputsFromSheetUI");
 
 /**
  * Retrieves problem data from the 'Problems' sheet via the model-centric utility,
  * applies filter criteria based on selected control panel values, and returns
  * the filtered problems as an array of normalized problem objects.
  *
- * The criteria used for filtering are taken from the following named ranges:
- * - 'ControlPanel_DominantTopic'
- * - 'ControlPanel_Difficulty'
- * - 'ControlPanel_InputDataStructure'
+ * The criteria used for filtering are taken from the GroupSelection UI:
  *
  * Filtering is performed against the original (non-normalized) UI label keys,
  * as the sheet headers are normalized during retrieval.
@@ -19,33 +18,31 @@ const { getModelDataFromSheet } = require("../sheetUtils/getModelDataFromSheet")
 function getFilteredProblems() {
     const problems = getModelDataFromSheet('Problem');
 
-    const selectedDominantTopic = getNamedRangeValue('ControlPanel_DominantTopic');
-    const selectedDifficulty = getNamedRangeValue('ControlPanel_Difficulty');
-    const selectedInputDataStructure = getNamedRangeValue('ControlPanel_InputDataStructure');
+    const filters = getInputsFromSheetUI(NAMED_RANGES.GroupSelection.FILTERS);
 
     const criteria = [];
-    if (selectedDominantTopic != 'All') {
+    if (filters.get('Dominant Topic') != 'All') {
         criteria.push({
             field: 'dominantTopic',
-            value: selectedDominantTopic,
+            value: filters.get('Dominant Topic'),
             mode: 'equals'
         })
     }
-    if (selectedDifficulty != 'All') {
+    if (filters.get('Difficulty') != 'All') {
         criteria.push({
             field: 'difficulty',
-            value: selectedDifficulty,
+            value: filters.get('Dominant Topic'),
             mode: 'equals'
         })
     }
-    if (selectedInputDataStructure != 'All') {
+    if (filters.get('Input Data Structure') != 'All') {
         criteria.push({
             field: 'inputDataStructure',
-            value: selectedInputDataStructure,
+            value: filters.get('Dominant Topic'),
             mode: 'equals'
         })
     }
-
+    
     const [problemHeaders, ...problemData] = filter2DArrayRows(problems, criteria);
 
     return convert2DArrayToObjects(problemHeaders, problemData);

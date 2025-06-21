@@ -44,9 +44,9 @@ function onSkipClick() {
     updateSkipCount(nextIndex, problems.length);
     updateCurrentProblem(
         problems[nextIndex],
-        NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_ATTRIBUTES,
-        NAMED_RANGES.ControlPanel.CURRENT_PROBLEM_LATEST_ATTEMPT_ATTRIBUTES,
-        NAMED_RANGES.ControlPanel.TIME_SINCE_CURRENT_PROBLEM
+        NAMED_RANGES.GroupSelection.PROBLEM_ATTRIBUTES,
+        NAMED_RANGES.GroupSelection.LATEST_ATTEMPT_ATTRIBUTES,
+        NAMED_RANGES.GroupSelection.TIME_SINCE_CURRENT_PROBLEM
     );
 }
 

@@ -23,10 +23,27 @@ function getFilteredProblems() {
     const selectedDifficulty = getNamedRangeValue('ControlPanel_Difficulty');
     const selectedInputDataStructure = getNamedRangeValue('ControlPanel_InputDataStructure');
 
-    const criteria = {
-        dominantTopic: selectedDominantTopic,
-        difficulty: selectedDifficulty,
-        inputDataStructure: selectedInputDataStructure
+    const criteria = [];
+    if (selectedDominantTopic != 'All') {
+        criteria.push({
+            field: 'dominantTopic',
+            value: selectedDominantTopic,
+            mode: 'equals'
+        })
+    }
+    if (selectedDifficulty != 'All') {
+        criteria.push({
+            field: 'difficulty',
+            value: selectedDifficulty,
+            mode: 'equals'
+        })
+    }
+    if (selectedInputDataStructure != 'All') {
+        criteria.push({
+            field: 'inputDataStructure',
+            value: selectedInputDataStructure,
+            mode: 'equals'
+        })
     }
 
     const [problemHeaders, ...problemData] = filter2DArrayRows(problems, criteria);

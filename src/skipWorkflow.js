@@ -1,6 +1,7 @@
 const { NAMED_RANGES } = require("./constants");
 const { generateProblemSelectionList } = require("./dataModelUtils/generateProblemSelectionList");
-const { isAttemptInProgress, getCurrentProblemLcId, updateCurrentProblem, updateSkipCount } = require("./workflowUtils");
+const { getNamedRangeValue } = require("./sheetUtils/getNamedRangeValue");
+const { isAttemptInProgress, updateCurrentProblem, updateSkipCount } = require("./workflowUtils");
 
 /**
  * Handles the skip button click event in the problem control panel.
@@ -18,10 +19,8 @@ function onSkipClick() {
         return;
     }
 
-    let lcId;
-    try {
-        lcId = getCurrentProblemLcId();
-    } catch (e) {
+    const lcId = getNamedRangeValue(NAMED_RANGES.GroupSelection.LC_ID);
+    if (!lcId) {
         SpreadsheetApp.getUi().alert('Select a problem first.');
         return;
     }

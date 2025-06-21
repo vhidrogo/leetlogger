@@ -1,6 +1,6 @@
 const { convert2DArrayToObjects } = require("../utils/convert2DArrayToObjects");
 const { getModelDataFromSheet } = require("../sheetUtils/getModelDataFromSheet");
-const { NAMED_RANGES } = require("../constants");
+const { NAMED_RANGES, MODEL_FIELD_MAPPINGS } = require("../constants");
 const { getInputsFromSheetUI } = require("../sheetUtils/getInputsFromSheetUI");
 
 /**
@@ -21,26 +21,14 @@ function getFilteredProblems() {
     const filters = getInputsFromSheetUI(NAMED_RANGES.GroupSelection.FILTERS);
 
     const criteria = [];
-    if (filters.get('Dominant Topic') != 'All') {
-        criteria.push({
-            field: 'dominantTopic',
-            value: filters.get('Dominant Topic'),
-            mode: 'equals'
-        })
-    }
-    if (filters.get('Difficulty') != 'All') {
-        criteria.push({
-            field: 'difficulty',
-            value: filters.get('Dominant Topic'),
-            mode: 'equals'
-        })
-    }
-    if (filters.get('Input Data Structure') != 'All') {
-        criteria.push({
-            field: 'inputDataStructure',
-            value: filters.get('Dominant Topic'),
-            mode: 'equals'
-        })
+    for (const [field, value] of filters) {
+        if (value != 'All') {
+            criteria.push({
+                field: MODEL_FIELD_MAPPINGS.Problem[field],
+                value: value,
+                mode: 'includes'
+            })
+        }
     }
     
     const [problemHeaders, ...problemData] = filter2DArrayRows(problems, criteria);

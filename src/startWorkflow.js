@@ -2,7 +2,7 @@ const { NAMED_RANGES, SHEET_NAMES } = require("./constants");
 const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
 const { setInputsOnSheetUI } = require("./sheetUtils/setInputsOnSheetUI");
 const { setNamedRangeValue } = require("./sheetUtils/setNamedRangeValue");
-const { isAttemptInProgress, getCurrentProblemLcId } = require("./workflowUtils");
+const { isAttemptInProgress } = require("./workflowUtils");
 
 /**
  * Starts a problem attempt from the Group Selection view.

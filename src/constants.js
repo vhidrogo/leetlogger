@@ -52,10 +52,9 @@ const NAMED_RANGES = {
         TIMEFRAME: 'DifficultyCounts_Timeframe',
     },
     GroupSelection: {
-        DOMINANT_TOPIC: 'GroupSelection_DominantTopic',
-        DIFFICULTY: 'GroupSelection_Difficulty',
         FILTERS: 'GroupSelection_Filters',
         LATEST_ATTEMPT_ATTRIBUTES: 'GroupSelection_LatestAttemptAttributes',
+        LC_ID: 'GroupSelection_LC_ID',
         PRIORITIZE_NOT_QUALITY_CODE: 'GroupSelection_PrioritizeNotQualityCode',
         PRIORITIZE_SPACE_NOT_OPTIMAL: 'GroupSelection_PrioritizeSpaceNotOptimal',
         PRIORITIZE_TIME_NOT_OPTIMAL: 'GroupSelection_PrioritizeTimeNotOptimal',

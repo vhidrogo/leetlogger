@@ -1,4 +1,5 @@
 const { NAMED_RANGES, MODEL_FIELD_MAPPINGS } = require("./constants");
+const { getLatestAttemptsMap } = require("./dataModelUtils/getLatestAttemptsMap");
 const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
 const { getModelDataFromSheet } = require("./sheetUtils/getModelDataFromSheet");
 const { convertArrayToObject } = require("./utils/convertArrayToObject");
@@ -21,6 +22,7 @@ function onFindClick() {
             NAMED_RANGES.SingleSelection.TIME_SINCE
         );
         SpreadsheetApp.getUi().alert(e.message);
+        return;
     }
 
     updateCurrentProblem(
@@ -43,5 +45,11 @@ function findProblem() {
     if (!matches.length) throw new Error('No problem matches search criteria.');
     if (matches.length > 2) throw new Error('Multiple problems matching criteria.');
 
-    return convertArrayToObject(...matches);
+    const problemAttributes = convertArrayToObject(...matches);
+    const latestAttemptsMap = getLatestAttemptsMap();
+    if (latestAttemptsMap.hasOwnProperty(problemAttributes.lcId)) {
+        Object.assign(problemAttributes, latestAttemptsMap[problemAttributes.lcId]);
+    }
+
+    return problemAttributes;
 }

@@ -131,21 +131,6 @@ function updateSelectionMetrics(problemAttempts) {
 }
 
 /**
- * Retrieves the current problem's LeetCode ID from the named range.
- * 
- * @throws {Error} If no LC ID is found in the named range.
- * @returns {string} The LeetCode ID of the currently selected problem.
- */
-function getCurrentProblemLcId(rangeName) {
-    const lcId = getNamedRangeValue(rangeName);
-    if (!lcId) {
-        throw new Error('Missing LC ID.');
-    }
-
-    return lcId;
-}
-
-/**
  * Checks whether a LeetLogger problem attempt is currently in progress.
  *
  * This is determined by checking if the progress value named range
@@ -154,7 +139,7 @@ function getCurrentProblemLcId(rangeName) {
  * @returns {boolean} True if an attempt is in progress, false otherwise.
  */
 function isAttemptInProgress() {
-    return getNamedRangeValue(NAMED_RANGES.AttemptInProgress.PROGRESS) != '';
+    return getNamedRangeValue(NAMED_RANGES.AttemptInProgress.START_TIME) != '';
 }
 
 /**
@@ -217,7 +202,6 @@ module.exports = {
     updateSelectionMetrics,
     updateCurrentProblem,
     updateSkipCount,
-    getCurrentProblemLcId,
     isAttemptInProgress,
     isAttemptDone,
     resetAttemptInputs,

@@ -1,4 +1,4 @@
-const { NAMED_RANGES, SHEET_NAMES } = require("./constants");
+const { NAMED_RANGES, SHEET_NAMES, PROBLEM_SELECTORS } = require("./constants");
 const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
 const { setInputsOnSheetUI } = require("./sheetUtils/setInputsOnSheetUI");
 const { setNamedRangeValue } = require("./sheetUtils/setNamedRangeValue");
@@ -13,7 +13,7 @@ const { isAttemptInProgress } = require("./workflowUtils");
  * @returns {void}
  */
 function onGroupSelectionStartClick() {
-    startWorkflow(NAMED_RANGES.GroupSelection.PROBLEM_ATTRIBUTES);
+    startWorkflow(NAMED_RANGES.GroupSelection.PROBLEM_ATTRIBUTES, PROBLEM_SELECTORS.GROUP_SELECTION);
 }
 
 /**
@@ -25,7 +25,7 @@ function onGroupSelectionStartClick() {
  * @returns {void}
  */
 function onSingleSelectionStartClick() {
-    startWorkflow(NAMED_RANGES.SingleSelection.PROBLEM_ATTRIBUTES);
+    startWorkflow(NAMED_RANGES.SingleSelection.PROBLEM_ATTRIBUTES, PROBLEM_SELECTORS.SINGLE_SELECTION);
 }
 
 /**
@@ -39,7 +39,7 @@ function onSingleSelectionStartClick() {
  * @param {string} problemAttributesRangeName - The named range for the problem attributes section in the UI.
  * @returns {void}
  */
-function startWorkflow(problemAttributesRangeName) {
+function startWorkflow(problemAttributesRangeName, initiator) {
     if (isAttemptInProgress()) {
         SpreadsheetApp.getUi().alert('Attempt already in progress!');
         return;
@@ -53,6 +53,7 @@ function startWorkflow(problemAttributesRangeName) {
     
     SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.ATTEMPT_IN_PROGRESS).activate();
     updateAttemptInProgressUI(problemAttributes);
+    setNamedRangeValue(NAMED_RANGES.AttemptInProgress.INITIATOR, initiator);
 }
 
 /**

@@ -1,4 +1,4 @@
-const { NAMED_RANGES, MODEL_FIELD_MAPPINGS } = require("./constants");
+const { NAMED_RANGES, MODEL_FIELD_MAPPINGS, PROBLEM_SELECTORS } = require("./constants");
 const { getLatestAttemptsMap } = require("./dataModelUtils/getLatestAttemptsMap");
 const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
 const { getModelDataFromSheet } = require("./sheetUtils/getModelDataFromSheet");
@@ -16,21 +16,12 @@ function onFindClick() {
     try {
         problem = findProblem();
     } catch (e) {
-        clearCurrentProblem(
-            NAMED_RANGES.SingleSelection.PROBLEM_ATTRIBUTES,
-            NAMED_RANGES.SingleSelection.LATEST_ATTEMPT_ATTRIBUTES,
-            NAMED_RANGES.SingleSelection.TIME_SINCE
-        );
+        clearCurrentProblem(PROBLEM_SELECTORS.SINGLE_SELECTION);
         SpreadsheetApp.getUi().alert(e.message);
         return;
     }
 
-    updateCurrentProblem(
-        problem,
-        NAMED_RANGES.SingleSelection.PROBLEM_ATTRIBUTES,
-        NAMED_RANGES.SingleSelection.LATEST_ATTEMPT_ATTRIBUTES,
-        NAMED_RANGES.SingleSelection.TIME_SINCE
-    )
+    updateCurrentProblem(problem, PROBLEM_SELECTORS.SINGLE_SELECTION)
 }
 
 function findProblem() {

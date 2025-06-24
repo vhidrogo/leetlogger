@@ -2,7 +2,7 @@ const { getNamedRangeValue } = require("./sheetUtils/getNamedRangeValue");
 const { setNamedRangeValue } = require("./sheetUtils/setNamedRangeValue");
 const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
 const { setInputsOnSheetUI } = require("./sheetUtils/setInputsOnSheetUI");
-const { MODEL_FIELD_MAPPINGS, NAMED_RANGES } = require("./constants");
+const { MODEL_FIELD_MAPPINGS, NAMED_RANGES, PROBLEM_SELECTORS } = require("./constants");
 const { calculateSelectionMetrics } = require("./dataModelUtils/calculateSelectionMetrics");
 const { formatTimeSince } = require("./utils/formatTimeSince");
 
@@ -25,18 +25,9 @@ function restartProblemSelection() {
     setNamedRangeValue(NAMED_RANGES.GroupSelection.SKIP_COUNT, '');
 
     if (problems.length) {
-        updateCurrentProblem(
-            problems[0],
-            NAMED_RANGES.GroupSelection.PROBLEM_ATTRIBUTES,
-            NAMED_RANGES.GroupSelection.LATEST_ATTEMPT_ATTRIBUTES,
-            NAMED_RANGES.GroupSelection.TIME_SINCE_CURRENT_PROBLEM
-        );
+        updateCurrentProblem(problems[0], PROBLEM_SELECTORS.GROUP_SELECTION);
     } else {
-        clearCurrentProblem(
-            NAMED_RANGES.GroupSelection.PROBLEM_ATTRIBUTES,
-            NAMED_RANGES.GroupSelection.LATEST_ATTEMPT_ATTRIBUTES,
-            NAMED_RANGES.GroupSelection.TIME_SINCE_CURRENT_PROBLEM
-        );
+        clearCurrentProblem(PROBLEM_SELECTORS.GROUP_SELECTION);
     }
 }
 
@@ -55,43 +46,41 @@ function updateSkipCount(problemIndex, problemListCount) {
  * Updates the UI with the selected problem's attributes and latest attempt details.
  *
  * Retrieves the input fields map from the UI for both problem attributes and latest attempt attributes  
- * using the provided named ranges, then maps the provided attribute values to their corresponding keys  
- * and writes the updated values back to the UI.
+ * using the named ranges associated with the provided problem selector, then maps the provided attribute  
+ * values to their corresponding keys and writes the updated values back to the UI.
  *
  * For the latest attempt attributes section, if a given attribute key does not exist in the provided  
  * problemAttemptAttributes object, the corresponding input field is set to an empty string.
  *
- * Also updates the "time since current problem" value using the provided range name.
+ * Also updates the "time since current problem" value using the appropriate named range tied to the problem selector.
  *
  * @param {Object} problemAttemptAttributes - An object containing attribute key-value pairs for the selected problem and its latest attempt.
  *                                            Keys should match the input field names in the UI control panel ranges.
- * @param {string} problemAttributesRangeName - The named range for the problem attributes section in the UI.
- * @param {string} latestAttemptsRangeName - The named range for the latest attempt attributes section in the UI.
- * @param {string} timeSinceRangeName - The named range for displaying the time since the current problem was started.
+ * @param {string} problemSelector - The key used to look up the associated named ranges for this problem in the NAMED_RANGES object.
  */
-function updateCurrentProblem(problemAttemptAttributes, problemAttributesRangeName, latestAttemptsRangeName, timeSinceRangeName) {
-    const problemAttributes = getInputsFromSheetUI(problemAttributesRangeName);
+function updateCurrentProblem(problemAttemptAttributes, problemSelector) {
+    const problemAttributes = getInputsFromSheetUI(NAMED_RANGES[problemSelector].PROBLEM_ATTRIBUTES);
     for (const key of problemAttributes.keys()) {
         const fieldKey = MODEL_FIELD_MAPPINGS.Problem[key];
         if (problemAttemptAttributes.hasOwnProperty(fieldKey)) {
             problemAttributes.set(key, problemAttemptAttributes[fieldKey]);
         }
     }
-    setInputsOnSheetUI(problemAttributesRangeName, problemAttributes);
+    setInputsOnSheetUI(NAMED_RANGES[problemSelector].PROBLEM_ATTRIBUTES, problemAttributes);
 
-    const latestAttemptAttributes = getInputsFromSheetUI(latestAttemptsRangeName);
+    const latestAttemptAttributes = getInputsFromSheetUI(NAMED_RANGES[problemSelector].LATEST_ATTEMPT_ATTRIBUTES);
     for (const key of latestAttemptAttributes.keys()) {
         const fieldKey = MODEL_FIELD_MAPPINGS.Attempt[key];
         const newValue = problemAttemptAttributes[fieldKey] ?? '';
         latestAttemptAttributes.set(key, newValue);
     }
-    setInputsOnSheetUI(latestAttemptsRangeName, latestAttemptAttributes);
+    setInputsOnSheetUI(NAMED_RANGES[problemSelector].LATEST_ATTEMPT_ATTRIBUTES, latestAttemptAttributes);
 
     if (problemAttemptAttributes.startTime) {
         const timeSince = formatTimeSince(problemAttemptAttributes.startTime);
-        setNamedRangeValue(timeSinceRangeName, timeSince);
+        setNamedRangeValue(NAMED_RANGES[problemSelector].TIME_SINCE_CURRENT_PROBLEM, timeSince);
     } else {
-        setNamedRangeValue(timeSinceRangeName, 'Unattempted');
+        setNamedRangeValue(NAMED_RANGES[problemSelector].TIME_SINCE_CURRENT_PROBLEM, 'Unattempted');
     }
 }
 
@@ -99,20 +88,18 @@ function updateCurrentProblem(problemAttemptAttributes, problemAttributesRangeNa
  * Clears the currently selected problem's attributes and latest attempt details from the UI.
  *
  * Resets all input fields in both the problem attributes and latest attempt attributes sections  
- * of the control panel to their default (empty) state, using the provided named ranges.  
+ * of the control panel to their default (empty) state, using the named ranges associated with the provided problem selector.  
  * Additionally, clears the value displayed for the "time since current problem" field.
  *
  * This is typically used when no problem is actively selected or when transitioning between problems  
  * to ensure no residual data is displayed.
  *
- * @param {string} problemAttributesRangeName - The named range for the problem attributes section in the UI.
- * @param {string} latestAttemptsRangeName - The named range for the latest attempt attributes section in the UI.
- * @param {string} timeSinceRangeName - The named range for the "time since current problem" field in the UI.
+ * @param {string} problemSelector - The key used to look up the associated named ranges for this problem in the NAMED_RANGES object.
  */
-function clearCurrentProblem(problemAttributesRangeName, latestAttemptsRangeName, timeSinceRangeName) {
-    resetInputValues(problemAttributesRangeName);
-    resetInputValues(latestAttemptsRangeName);
-    setNamedRangeValue(timeSinceRangeName, '');
+function clearCurrentProblem(problemSelector) {
+    resetInputValues(NAMED_RANGES[problemSelector].PROBLEM_ATTRIBUTES);
+    resetInputValues(NAMED_RANGES[problemSelector].LATEST_ATTEMPT_ATTRIBUTES, latestAttemptAttributes);
+    setNamedRangeValue(NAMED_RANGES[problemSelector].TIME_SINCE_CURRENT_PROBLEM, '');
 }
 
 function updateSelectionMetrics(problemAttempts) {

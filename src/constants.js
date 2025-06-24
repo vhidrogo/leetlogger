@@ -39,6 +39,7 @@ const NAMED_RANGES = {
         DIFFICULTY: 'AttemptInprogress_Difficulty',
         DOMINANT_TOPIC: 'AttemptInProgress_DominantTopic',
         END_TIME: 'AttemptInProgress_EndTime',
+        INITIATOR: 'AttemptInProgress_Initiator',
         INPUTS: 'AttemptInProgress_AttemptInputs',
         OPTIMAL_INPUTS: 'AttemptInProgress_OptimalInputs',
         PROBLEM_ATTRIBUTES: 'AttemptInProgress_ProblemAttributes',
@@ -80,13 +81,18 @@ const NAMED_RANGES = {
         LATEST_ATTEMPT_ATTRIBUTES: 'SingleSelection_LatestAttemptAttributes',
         PROBLEM_ATTRIBUTES: 'SingleSelection_ProblemAttributes',
         PROBLEM_SEARCH_INPUTS: 'SingleSelection_ProblemSearchInputs',
-        TIME_SINCE: 'SingleSelection_TimeSince',
+        TIME_SINCE_CURRENT_PROBLEM: 'SingleSelection_TimeSince',
     },
     TargetTimes: {
         DIFFICULTY: 'TargetTimesDifficulty',
         MAX_MINUTES: 'TargetTimesMaxMinutes',
         TOPIC: 'TargetTimesTopic'
     }
+}
+
+const PROBLEM_SELECTORS = {
+    GROUP_SELECTION: 'GroupSelection',
+    SINGLE_SELECTION: 'SingleSelection',
 }
 
 const SHEET_NAMES = {
@@ -98,5 +104,6 @@ module.exports = {
     DOMINANT_TOPICS,
     MODEL_FIELD_MAPPINGS,
     NAMED_RANGES,
+    PROBLEM_SELECTORS,
     SHEET_NAMES,
  }

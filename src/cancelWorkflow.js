@@ -13,4 +13,11 @@ function onCancelClick() {
     if (response == ui.Button.NO) return;
 
     resetAttemptInputs();
+    
+    const attemptInitiator = getNamedRangeValue(NAMED_RANGES.AttemptInProgress.INITIATOR);
+    try {
+        SpreadsheetApp.getActiveSpreadsheet().getSheetByName(attemptInitiator).activate();
+    } catch (e) {
+        return;
+    }
 }

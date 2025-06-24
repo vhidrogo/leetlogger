@@ -17,8 +17,10 @@ const MODEL_FIELD_MAPPINGS = {
         'Difficulty': 'difficulty',
         'Input Data Structure': 'inputDataStructure',
         'Name': 'name',
+        'Optimal Solution': 'optimalSolution',
         'Link': 'link',
         'Subdominant Topic': 'subdominantTopic',
+        'Tags': 'tags',
         'Notes': 'notes'
     },
     Attempt: {

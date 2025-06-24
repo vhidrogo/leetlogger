@@ -1,4 +1,4 @@
-const { NAMED_RANGES } = require("./constants");
+const { NAMED_RANGES, PROBLEM_SELECTORS } = require("./constants");
 const { generateProblemSelectionList } = require("./dataModelUtils/generateProblemSelectionList");
 const { getNamedRangeValue } = require("./sheetUtils/getNamedRangeValue");
 const { isAttemptInProgress, updateCurrentProblem, updateSkipCount } = require("./workflowUtils");
@@ -41,12 +41,7 @@ function onSkipClick() {
     }
     
     updateSkipCount(nextIndex, problems.length);
-    updateCurrentProblem(
-        problems[nextIndex],
-        NAMED_RANGES.GroupSelection.PROBLEM_ATTRIBUTES,
-        NAMED_RANGES.GroupSelection.LATEST_ATTEMPT_ATTRIBUTES,
-        NAMED_RANGES.GroupSelection.TIME_SINCE_CURRENT_PROBLEM
-    );
+    updateCurrentProblem(problems[nextIndex], PROBLEM_SELECTORS.GROUP_SELECTION);
 }
 
 /**

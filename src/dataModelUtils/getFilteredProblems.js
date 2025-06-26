@@ -15,10 +15,10 @@ const { getInputsFromSheetUI } = require("../sheetUtils/getInputsFromSheetUI");
  *
  * @returns {Array<Object>} An array of normalized problem objects matching the selected criteria.
  */
-function getFilteredProblems() {
+function getFilteredProblems(filtersRangeName) {
     const problems = getModelDataFromSheet('Problem');
 
-    const filters = getInputsFromSheetUI(NAMED_RANGES.GroupSelection.FILTERS);
+    const filters = getInputsFromSheetUI(filtersRangeName);
 
     const criteria = [];
     for (const [field, value] of filters) {
@@ -37,7 +37,7 @@ function getFilteredProblems() {
 }
 
 function getFilteredProblemsLogTest() {
-    getFilteredProblems().forEach(row => Logger.log(row));
+    getFilteredProblems(NAMED_RANGES.GroupSelection.FILTERS).forEach(row => Logger.log(row));
 }
 
 module.exports = { getFilteredProblems }

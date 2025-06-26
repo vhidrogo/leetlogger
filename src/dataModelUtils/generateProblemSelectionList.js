@@ -1,3 +1,4 @@
+const { NAMED_RANGES } = require("../constants");
 const { getFilteredProblems } = require("./getFilteredProblems");
 const { getLatestAttemptsMap } = require("./getLatestAttemptsMap");
 const { joinProblemsWithLatestAttempts } = require("./joinProblemsWithLatestAttempts");
@@ -15,7 +16,7 @@ const { sortProblemAttempts } = require("./sortProblemAttempts");
  *     The array is currently unsorted but prepared for future prioritization logic.
  */
 function generateProblemSelectionList() {
-    const problems = getFilteredProblems();
+    const problems = getFilteredProblems(NAMED_RANGES.GroupSelection.FILTERS);
     const latestAttemptsMap = getLatestAttemptsMap();
 
     const problemAttempts = joinProblemsWithLatestAttempts(problems, latestAttemptsMap);

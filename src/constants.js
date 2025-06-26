@@ -1,15 +1,3 @@
-const DOMINANT_TOPICS = [
-    'Backtracking',
-    'Binary Search',
-    'Breadth-First Search',
-    'Depth-First Search',
-    'Dynamic Programming',
-    'Greedy Algorithms',
-    'Prefix Sum',
-    'Sliding Window',
-    'Two-Pointer',
-]
-
 const MODEL_FIELD_MAPPINGS = {
     Problem: {
         'LC ID': 'lcId',
@@ -48,12 +36,6 @@ const NAMED_RANGES = {
         PROGRESS: 'AttemptInProgress_Progress',
         START_TIME: 'AttemptInProgress_StartTime',
     },
-    DifficultyCounts: {
-        COUNTS: 'DifficultyCounts_Counts',
-        DIFFICULTY: 'DifficultyCounts_Difficulty',
-        ORDER: 'DifficultyCounts_Order',
-        TIMEFRAME: 'DifficultyCounts_Timeframe',
-    },
     GroupSelection: {
         FILTERS: 'GroupSelection_Filters',
         LATEST_ATTEMPT_ATTRIBUTES: 'GroupSelection_LatestAttemptAttributes',
@@ -79,6 +61,9 @@ const NAMED_RANGES = {
         ATTEMPTS: 'LatestAttempts_Attempts',
         COUNT: 'LatestAttempts_Count',
     },
+    Options: {
+        DOMINANT_TOPICS: 'Options_DominantTopics',
+    },
     SingleSelection: {
         LATEST_ATTEMPT_ATTRIBUTES: 'SingleSelection_LatestAttemptAttributes',
         PROBLEM_ATTRIBUTES: 'SingleSelection_ProblemAttributes',
@@ -89,6 +74,14 @@ const NAMED_RANGES = {
         DIFFICULTY: 'TargetTimesDifficulty',
         MAX_MINUTES: 'TargetTimesMaxMinutes',
         TOPIC: 'TargetTimesTopic'
+    },
+    TopicMetrics: {
+        EXCLUDE_DOMINANT_TOPICS: 'TopicMetrics_ExcludeDominantTopics',
+        TOP_N: 'TopMetrics_TopN',
+        TOPIC_METRICS: 'TopicMetrics_TopicMetrics',
+        PROBLEM_FILTERS: 'TopicMetrics_ProblemFilters',
+        SORT_METRIC: 'TopicMetrics_SortMetric',
+        TIMEFRAME: 'TopicMetrics_Timeframe',
     }
 }
 

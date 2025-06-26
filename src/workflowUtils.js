@@ -98,7 +98,7 @@ function updateCurrentProblem(problemAttemptAttributes, problemSelector) {
  */
 function clearCurrentProblem(problemSelector) {
     resetInputValues(NAMED_RANGES[problemSelector].PROBLEM_ATTRIBUTES);
-    resetInputValues(NAMED_RANGES[problemSelector].LATEST_ATTEMPT_ATTRIBUTES, latestAttemptAttributes);
+    resetInputValues(NAMED_RANGES[problemSelector].LATEST_ATTEMPT_ATTRIBUTES);
     setNamedRangeValue(NAMED_RANGES[problemSelector].TIME_SINCE_CURRENT_PROBLEM, '');
 }
 

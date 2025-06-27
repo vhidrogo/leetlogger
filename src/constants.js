@@ -25,6 +25,9 @@ const MODEL_FIELD_MAPPINGS = {
 }
 
 const NAMED_RANGES = {
+    AddProblem: {
+        INPUTS: 'AddProblem_Inputs',
+    },
     AttemptInProgress: {
         DIFFICULTY: 'AttemptInprogress_Difficulty',
         DOMINANT_TOPIC: 'AttemptInProgress_DominantTopic',
@@ -93,6 +96,7 @@ const PROBLEM_SELECTORS = {
 const SHEET_NAMES = {
     ATTEMPTS: 'Attempts',
     ATTEMPT_IN_PROGRESS: 'AttemptInProgress',
+    PROBLEMS: 'Problems',
 }
 
 module.exports = {

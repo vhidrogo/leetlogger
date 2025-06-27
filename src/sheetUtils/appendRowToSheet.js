@@ -15,3 +15,5 @@ function appendRowToSheet(sheetName, rowValues) {
     
     sheet.appendRow(rowValues);
 }
+
+module.exports = { appendRowToSheet }

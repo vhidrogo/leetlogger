@@ -1,5 +1,6 @@
 const { NAMED_RANGES, SHEET_NAMES, PROBLEM_SELECTORS } = require("./constants");
 const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
+const { getSheetByName } = require("./sheetUtils/getSheetByName");
 const { setInputsOnSheetUI } = require("./sheetUtils/setInputsOnSheetUI");
 const { setNamedRangeValue } = require("./sheetUtils/setNamedRangeValue");
 const { isAttemptInProgress } = require("./workflowUtils");
@@ -50,8 +51,10 @@ function startWorkflow(problemAttributesRangeName, initiator) {
         SpreadsheetApp.getUi().alert('Select a problem first.');
         return;
     }
-    
-    SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.ATTEMPT_IN_PROGRESS).activate();
+
+    const attemptInProgressSheet = getSheetByName(SHEET_NAMES.ATTEMPT_IN_PROGRESS);
+    attemptInProgressSheet.showSheet();
+    attemptInProgressSheet.activate();
     updateAttemptInProgressUI(problemAttributes);
     setNamedRangeValue(NAMED_RANGES.AttemptInProgress.INITIATOR, initiator);
 }

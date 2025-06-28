@@ -1,6 +1,7 @@
 const { NAMED_RANGES, SHEET_NAMES, PROBLEM_SELECTORS } = require("./constants");
 const { getInputValues } = require("./sheetUtils/getInputValues");
 const { getNamedRangeValue } = require("./sheetUtils/getNamedRangeValue");
+const { getSheetByName } = require("./sheetUtils/getSheetByName");
 const { resetAttemptInputs, restartProblemSelection, clearCurrentProblem } = require("./workflowUtils");
 
 function onLogClick() {
@@ -30,4 +31,6 @@ function logAttempt() {
     if (attemptInitiator == PROBLEM_SELECTORS.SINGLE_SELECTION) {
         clearCurrentProblem(PROBLEM_SELECTORS.SINGLE_SELECTION);
     }
+
+    getSheetByName(SHEET_NAMES.ATTEMPT_IN_PROGRESS).hideSheet();
 }

@@ -82,6 +82,8 @@ function updateCurrentProblem(problemAttemptAttributes, problemSelector) {
     } else {
         setNamedRangeValue(NAMED_RANGES[problemSelector].TIME_SINCE_CURRENT_PROBLEM, 'Unattempted');
     }
+
+    setNamedRangeValue(NAMED_RANGES[problemSelector].OPTIMAL_SOLUTION, problemAttemptAttributes.optimalSolution);
 }
 
 /**
@@ -100,6 +102,7 @@ function clearCurrentProblem(problemSelector) {
     resetInputValues(NAMED_RANGES[problemSelector].PROBLEM_ATTRIBUTES);
     resetInputValues(NAMED_RANGES[problemSelector].LATEST_ATTEMPT_ATTRIBUTES);
     setNamedRangeValue(NAMED_RANGES[problemSelector].TIME_SINCE_CURRENT_PROBLEM, '');
+    setNamedRangeValue(NAMED_RANGES[problemSelector].OPTIMAL_SOLUTION, '');
 }
 
 function updateSelectionMetrics(problemAttempts) {

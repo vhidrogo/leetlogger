@@ -43,6 +43,7 @@ const NAMED_RANGES = {
         FILTERS: 'GroupSelection_Filters',
         LATEST_ATTEMPT_ATTRIBUTES: 'GroupSelection_LatestAttemptAttributes',
         LC_ID: 'GroupSelection_LC_ID',
+        OPTIMAL_SOLUTION: 'GroupSelection_OptimalSolution',
         PRIORITIZE_NOT_QUALITY_CODE: 'GroupSelection_PrioritizeNotQualityCode',
         PRIORITIZE_SPACE_NOT_OPTIMAL: 'GroupSelection_PrioritizeSpaceNotOptimal',
         PRIORITIZE_TIME_NOT_OPTIMAL: 'GroupSelection_PrioritizeTimeNotOptimal',
@@ -69,6 +70,7 @@ const NAMED_RANGES = {
     },
     SingleSelection: {
         LATEST_ATTEMPT_ATTRIBUTES: 'SingleSelection_LatestAttemptAttributes',
+        OPTIMAL_SOLUTION: 'SingleSelection_OptimalSolution',
         PROBLEM_ATTRIBUTES: 'SingleSelection_ProblemAttributes',
         PROBLEM_SEARCH_INPUTS: 'SingleSelection_ProblemSearchInputs',
         TIME_SINCE_CURRENT_PROBLEM: 'SingleSelection_TimeSince',

@@ -14,4 +14,14 @@ function onEndClick() {
     }
 
     setNamedRangeValue(NAMED_RANGES.AttemptInProgress.END_TIME, new Date());
+
+    const ui = SpreadsheetApp.getUi();
+    const response = ui.alert(
+        'Solve Status',
+        'Did you solve the problem?',
+        ui.ButtonSet.YES_NO
+    );
+    const solved = response === ui.Button.YES ? true : false;
+
+    setNamedRangeValue(NAMED_RANGES.AttemptInProgress.SOLVED, solved);
 }

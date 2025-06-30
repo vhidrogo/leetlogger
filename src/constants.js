@@ -38,6 +38,7 @@ const NAMED_RANGES = {
         PROBLEM_ATTRIBUTES: 'AttemptInProgress_ProblemAttributes',
         PROGRESS: 'AttemptInProgress_Progress',
         START_TIME: 'AttemptInProgress_StartTime',
+        SOLVED: 'AttemptInProgress_Solved',
     },
     GroupSelection: {
         FILTERS: 'GroupSelection_Filters',

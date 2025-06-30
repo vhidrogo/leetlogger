@@ -1,3 +1,4 @@
+const { SHEET_NAMES } = require("./constants");
 const { resetAttemptInputs, isAttemptInProgress } = require("./workflowUtils");
 
 function onCancelClick() {
@@ -10,7 +11,7 @@ function onCancelClick() {
         ui.ButtonSet.YES_NO
     );
 
-    if (response == ui.Button.NO) return;
+    if (response === ui.Button.NO) return;
 
     resetAttemptInputs();
     
@@ -20,4 +21,5 @@ function onCancelClick() {
     } catch (e) {
         return;
     }
+    getSheetByName(SHEET_NAMES.ATTEMPT_IN_PROGRESS).hideSheet();
 }

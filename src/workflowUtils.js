@@ -160,7 +160,8 @@ function resetAttemptInputs() {
     const clearFields = [
         'Start Time',
         'End Time',
-        'Notes'
+        'Solved',
+        'Notes',
     ]
 
     const defaults = {
@@ -177,7 +178,6 @@ function resetAttemptInputs() {
             ),
             1
         ),"")`,
-        'Solved': false,
         'Time Complexity Optimal': false,
         'Space Complexity Optimal': false,
         'Quality Code': false,

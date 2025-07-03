@@ -7,7 +7,7 @@
  * @returns {Array<string>} An array of input values in the order they appear in the inputs map.
  * @throws {Error} If any of the required fields are missing or empty.
  */
-function getInputValues(rangeName, requiredFields) {
+function getInputValues(rangeName, requiredFields = []) {
     const inputsMap = getInputsFromSheetUI(rangeName);
 
     for (const field of requiredFields) {

@@ -35,6 +35,7 @@ const NAMED_RANGES = {
         INITIATOR: 'AttemptInProgress_Initiator',
         INPUTS: 'AttemptInProgress_AttemptInputs',
         OPTIMAL_INPUTS: 'AttemptInProgress_OptimalInputs',
+        OPTIMAL_SOLUTION: 'AttemptInProgress_OptimalSolution',
         PROBLEM_ATTRIBUTES: 'AttemptInProgress_ProblemAttributes',
         PROGRESS: 'AttemptInProgress_Progress',
         START_TIME: 'AttemptInProgress_StartTime',

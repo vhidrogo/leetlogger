@@ -1,5 +1,6 @@
 const { NAMED_RANGES, SHEET_NAMES, PROBLEM_SELECTORS } = require("./constants");
 const { getInputsFromSheetUI } = require("./sheetUtils/getInputsFromSheetUI");
+const { getNamedRangeValue } = require("./sheetUtils/getNamedRangeValue");
 const { getSheetByName } = require("./sheetUtils/getSheetByName");
 const { setInputsOnSheetUI } = require("./sheetUtils/setInputsOnSheetUI");
 const { setNamedRangeValue } = require("./sheetUtils/setNamedRangeValue");
@@ -56,6 +57,8 @@ function startWorkflow(problemAttributesRangeName, initiator) {
     attemptInProgressSheet.showSheet();
     attemptInProgressSheet.activate();
     updateAttemptInProgressUI(problemAttributes);
+    const optimalSolution = getNamedRangeValue(NAMED_RANGES[initiator].OPTIMAL_SOLUTION);
+    setNamedRangeValue(NAMED_RANGES.AttemptInProgress.OPTIMAL_SOLUTION, optimalSolution);
     setNamedRangeValue(NAMED_RANGES.AttemptInProgress.INITIATOR, initiator);
 }
 

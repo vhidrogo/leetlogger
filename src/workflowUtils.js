@@ -165,6 +165,7 @@ function resetAttemptInputs() {
     ]
 
     const defaults = {
+        'Approach Pattern': 'Optimal',
         'Duration Minutes': `=if(
             ${NAMED_RANGES.AttemptInProgress.END_TIME}="","",
             (${NAMED_RANGES.AttemptInProgress.END_TIME}-${NAMED_RANGES.AttemptInProgress.START_TIME})*1440

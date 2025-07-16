@@ -5,6 +5,7 @@
 | Field              | Type     | Description                                                       | Example                  |
 |:------------------|:---------|:------------------------------------------------------------------|:-------------------------|
 | LC ID              | String   | LeetCode problem identifier                                        | `165`                     |
+| Approach Pattern   | String   | The algorithmic pattern used for this attempt                      | `Optimal`                 |
 | Date               | Date     | Date of attempt                                                    | `2025-05-01`              |
 | Start Time         | Time     | Time when attempt started                                          | `08:12 AM`                |
 | End Time           | Time     | Time when attempt ended                                            | `08:30 AM`                |
@@ -28,5 +29,5 @@
 | Subdominant Topics    | String[] | List of secondary patterns involved                              | `["Two-pass", "Parsing"]`|
 | Difficulty            | String   | Problem difficulty level                                         | `Medium`                 |
 | Input Data Structure  | String   | Data structure used in input                                      | `String`                 |
-| Target Time           | Number   | Target time in minutes to solve                                   | `20`                     |
+| Alternate Patterns    | String   | Comma-separated list of other possible patterns for this problem  | `Hash Table, Sorting`    |
 

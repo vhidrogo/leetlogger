@@ -1,15 +1,16 @@
 const MODEL_FIELD_MAPPINGS = {
     Problem: {
-        'LC ID': 'lcId',
-        'Dominant Topic': 'dominantTopic',
+        'Alternate Patterns': 'alternatePatterns',
         'Difficulty': 'difficulty',
+        'Dominant Topic': 'dominantTopic',
         'Input Data Structure': 'inputDataStructure',
-        'Name': 'name',
-        'Optimal Solution': 'optimalSolution',
+        'LC ID': 'lcId',
         'Link': 'link',
+        'Name': 'name',
+        'Notes': 'notes',
+        'Optimal Solution': 'optimalSolution',
         'Subdominant Topic': 'subdominantTopic',
-        'Tags': 'tags',
-        'Notes': 'notes'
+        'Tags': 'tags'
     },
     Attempt: {
         'LC ID': 'lcId',

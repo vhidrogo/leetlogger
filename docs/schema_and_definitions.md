@@ -30,4 +30,4 @@
 | Difficulty            | String   | Problem difficulty level                                         | `Medium`                 |
 | Input Data Structure  | String   | Data structure used in input                                      | `String`                 |
 | Alternate Patterns    | String   | Comma-separated list of other possible patterns for this problem  | `Hash Table, Sorting`    |
-
+| Deleted               | Boolean  | Whether this problem should be hidden from active views          | `FALSE`                  |

@@ -20,7 +20,7 @@ function getFilteredProblems(filtersRangeName) {
 
     const filters = getInputsFromSheetUI(filtersRangeName);
 
-    const criteria = [];
+    const criteria = [{ field: 'deleted', value: false, mode: 'equals' }];
     for (const [field, value] of filters) {
         if (value != 'All') {
             criteria.push({

@@ -2,6 +2,7 @@ const MODEL_FIELD_MAPPINGS = {
     Problem: {
         'Alternate Patterns': 'alternatePatterns',
         'Difficulty': 'difficulty',
+        'Deleted': 'deleted',
         'Dominant Topic': 'dominantTopic',
         'Input Data Structure': 'inputDataStructure',
         'LC ID': 'lcId',

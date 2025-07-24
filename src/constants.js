@@ -1,3 +1,5 @@
+PREMIUM_SUBSCRIPTION = false;
+
 const MODEL_FIELD_MAPPINGS = {
     Problem: {
         'Alternate Patterns': 'alternatePatterns',
@@ -10,6 +12,7 @@ const MODEL_FIELD_MAPPINGS = {
         'Name': 'name',
         'Notes': 'notes',
         'Optimal Solution': 'optimalSolution',
+        'Premium': 'premium',
         'Subdominant Topic': 'subdominantTopic',
         'Tags': 'tags'
     },
@@ -109,6 +112,7 @@ module.exports = {
     DOMINANT_TOPICS,
     MODEL_FIELD_MAPPINGS,
     NAMED_RANGES,
+    PREMIUM_SUBSCRIPTION,
     PROBLEM_SELECTORS,
     SHEET_NAMES,
  }

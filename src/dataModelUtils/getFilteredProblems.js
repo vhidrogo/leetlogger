@@ -1,6 +1,6 @@
 const { convert2DArrayToObjects } = require("../utils/convert2DArrayToObjects");
 const { getModelDataFromSheet } = require("../sheetUtils/getModelDataFromSheet");
-const { NAMED_RANGES, MODEL_FIELD_MAPPINGS } = require("../constants");
+const { NAMED_RANGES, MODEL_FIELD_MAPPINGS, PREMIUM_SUBSCRIPTION } = require("../constants");
 const { getInputsFromSheetUI } = require("../sheetUtils/getInputsFromSheetUI");
 
 /**
@@ -29,6 +29,10 @@ function getFilteredProblems(filtersRangeName) {
                 mode: 'includes'
             })
         }
+    }
+
+    if (PREMIUM_SUBSCRIPTION === false) {
+        criteria.push({ field: 'premium', value: false, mode: 'equals' });
     }
     
     const [problemHeaders, ...problemData] = filter2DArrayRows(problems, criteria);

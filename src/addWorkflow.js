@@ -18,6 +18,8 @@ function logProblem() {
         'Link',
     ]
     const inputValues = getInputValues(NAMED_RANGES.AddProblem.INPUTS, requiredFields);
+    // Set soft deleted field to false
+    inputValues.push(false);
     appendRowToSheet(SHEET_NAMES.PROBLEMS, inputValues);
 }
 

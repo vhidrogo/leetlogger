@@ -80,6 +80,7 @@ const NAMED_RANGES = {
         MIN_TOTAL_ATTEMPTS: 'MetricsDashboard_MinTotalAttempts',
         PROBLEM_FILTERS: 'MetricsDashboard_ProblemFilters',
         SORT_METRIC: 'MetricsDashboard_SortMetric',
+        SORT_WEAK_TO_STRONG: 'MetricsDashboard_SortWeakToStrong',
         TIMEFRAME: 'MetricsDashboard_Timeframe',
         TOP_N: 'MetricsDashboard_TopN',
     },

@@ -89,11 +89,21 @@ const NAMED_RANGES = {
     },
     TopicMetrics: {
         EXCLUDE_DOMINANT_TOPICS: 'TopicMetrics_ExcludeDominantTopics',
-        TOP_N: 'TopMetrics_TopN',
-        TOPIC_METRICS: 'TopicMetrics_TopicMetrics',
+        TOP_N: 'TopicMetrics_TopN',
+        MIN_TOTAL_ATTEMPTS: 'TopicMetrics_MinTotalAttempts',
+        METRICS: 'TopicMetrics_TopicMetrics',
         PROBLEM_FILTERS: 'TopicMetrics_ProblemFilters',
         SORT_METRIC: 'TopicMetrics_SortMetric',
         TIMEFRAME: 'TopicMetrics_Timeframe',
+    },
+    TopicStructureMetrics: {
+        EXCLUDE_DOMINANT_TOPICS: 'TopicStructureMetrics_ExcludeDominantTopics',
+        TOP_N: 'TopicStructureMetrics_TopN',
+        MIN_TOTAL_ATTEMPTS: 'TopicStructureMetrics_MinTotalAttempts',
+        METRICS: 'TopicStructureMetrics_TopicStructureMetrics',
+        PROBLEM_FILTERS: 'TopicStructureMetrics_ProblemFilters',
+        SORT_METRIC: 'TopicStructureMetrics_SortMetric',
+        TIMEFRAME: 'TopicStructureMetrics_Timeframe',
     }
 }
 
@@ -106,6 +116,8 @@ const SHEET_NAMES = {
     ATTEMPTS: 'Attempts',
     ATTEMPT_IN_PROGRESS: 'AttemptInProgress',
     PROBLEMS: 'Problems',
+    TOPIC_METRICS: 'TopicMetrics',
+    TOPIC_STRUCTURE_METRICS: 'TopicStructureMetrics',
 }
 
 module.exports = {

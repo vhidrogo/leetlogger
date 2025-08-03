@@ -1,17 +1,28 @@
-const { NAMED_RANGES, DOMINANT_TOPICS, MODEL_FIELD_MAPPINGS } = require("../constants");
+const { NAMED_RANGES, MODEL_FIELD_MAPPINGS, SHEET_NAMES } = require("../constants");
 const { getFilteredProblems } = require("../dataModelUtils/getFilteredProblems");
-const { getColumnDataFromSheet } = require("../sheetUtils/getColumnDataFromSheet");
-const { getInputsFromSheetUI } = require("../sheetUtils/getInputsFromSheetUI");
 const { getModelDataFromSheet } = require("../sheetUtils/getModelDataFromSheet");
 const { getNamedRangeValue } = require("../sheetUtils/getNamedRangeValue");
 const { getNamedRangeValues } = require("../sheetUtils/getNamedRangeValues");
 const { writeToNamedRangeWithHeaders } = require("../sheetUtils/writeToNamedRangeWithHeaders");
 const { convert2DArrayToObjects } = require("../utils/convert2DArrayToObjects");
-const { convertArrayToObject } = require("../utils/convertArrayToObject");
-const { filter2DArrayRows } = require("../utils/filter2DArrayRows");
 
 function onTopicMetricsUpdateClick() {
-    const excludeDominantTopics = getNamedRangeValue(NAMED_RANGES.TopicMetrics.EXCLUDE_DOMINANT_TOPICS)
+    metricsWorkflow({
+        sheetName: SHEET_NAMES.TOPIC_METRICS,
+        keyFields: ['dominantTopic'],
+        includeAllOther: true,
+    });
+}
+
+function onTopicStructureMetricsUpdateClick() {
+    metricsWorkflow({
+        sheetName: SHEET_NAMES.TOPIC_STRUCTURE_METRICS,
+        keyFields: ['dominantTopic', 'inputDataStructure'],
+    });
+}
+
+function metricsWorkflow({ sheetName, keyFields, includeAllOther = false }) {
+    const excludeDominantTopics = getNamedRangeValue(NAMED_RANGES[sheetName].EXCLUDE_DOMINANT_TOPICS)
         .split(',')
         .map(topic => topic.trim());
     const dominantTopics = new Set(
@@ -19,53 +30,42 @@ function onTopicMetricsUpdateClick() {
             .flat()
             .filter(v => v !== '' && !excludeDominantTopics.includes(v))
     );
-    const problems = getFilteredProblems(NAMED_RANGES.TopicMetrics.PROBLEM_FILTERS);
+    const timeframe = getNamedRangeValue(NAMED_RANGES[sheetName].TIMEFRAME);
+    const sortMetric = getNamedRangeValue(NAMED_RANGES[sheetName].SORT_METRIC);
+    const topN = getNamedRangeValue(NAMED_RANGES[sheetName].TOP_N);
+    const minTotalAttempts = getNamedRangeValue(NAMED_RANGES[sheetName].MIN_TOTAL_ATTEMPTS);
     
-    const timeframe = getNamedRangeValue(NAMED_RANGES.TopicMetrics.TIMEFRAME);
     const cutoffDate = getCutoffDate(timeframe);
     const attemptMetricsByLcId = getAttemptMetricsByLcId(cutoffDate);
-    const sortMetric = getNamedRangeValue(NAMED_RANGES.TopicMetrics.SORT_METRIC);
+    const problems = getFilteredProblems(NAMED_RANGES[sheetName].PROBLEM_FILTERS);
 
-    const topN = getNamedRangeValue(NAMED_RANGES.TopicMetrics.TOP_N);
-    const topicMetrics = getTopicMetrics(topN, dominantTopics, problems, attemptMetricsByLcId, sortMetric);
-    writeToNamedRangeWithHeaders(topicMetrics, NAMED_RANGES.TopicMetrics.TOPIC_METRICS);
+    let metrics = summarizeMetricsByCustomKey(dominantTopics, problems, attemptMetricsByLcId, keyFields);
+
+    if (minTotalAttempts > 0) {
+        metrics = metrics.filter(obj => obj.totalAttempts >= minTotalAttempts);
+    }
+    sortMetrics(metrics, sortMetric);
+
+    metrics = includeAllOther? splitAllOther(metrics, topN) : metrics.slice(0, topN);
+    calculatePercents(metrics);
+    
+    writeToNamedRangeWithHeaders(metrics, NAMED_RANGES[sheetName].METRICS);
 }
 
-function getTopicMetrics(topN, dominantTopics, problems, attemptMetricsByLcId, sortMetric) {
-    const metricsByDominantTopic = {};
-    for (const problem of problems) {
-        if (dominantTopics.has(problem.dominantTopic)) {
-            if (!metricsByDominantTopic.hasOwnProperty(problem.dominantTopic)) {
-                metricsByDominantTopic[problem.dominantTopic] = { dominantTopic: problem.dominantTopic };
+function calculatePercents(metrics) {
+    const percentFields = ['solved', 'timeComplexityOptimal', 'spaceComplexityOptimal', 'qualityCode'];
+    
+    metrics.forEach(obj => {
+        const total = obj.totalAttempts;
+        percentFields.forEach(field => {
+            if (obj[field] !== undefined) {
+            obj[field] = total ? (obj[field] / total) : 0;
             }
-            const topicMetrics = metricsByDominantTopic[problem.dominantTopic];
-            topicMetrics.totalProblems = (topicMetrics.totalProblems || 0) + 1;
-            if (attemptMetricsByLcId.hasOwnProperty(problem.lcId)) {
-                for (const metric in attemptMetricsByLcId[problem.lcId]) {
-                    topicMetrics[metric] = (topicMetrics[metric] || 0) + attemptMetricsByLcId[problem.lcId][metric];
-                }
-            } else {
-                topicMetrics.unattempted = (topicMetrics.unattempted || 0) + 1;
-            }
-        }
-    }
+        });
+    });
+}
 
-    const metrics = Object.values(metricsByDominantTopic);
-
-    if (sortMetric === 'Unattempted') {
-        metrics.sort((a, b) => b.unattempted - a.unattempted);
-    } else if (sortMetric === 'Total Problems') {
-        metrics.sort((a, b) => a.totalProblems - b.totalProblems);
-    } else if (sortMetric === 'Total Attempts') {
-        metrics.sort((a, b) => a.totalAttempts - b.totalAttempts);
-    } else {
-        metrics.sort((a, b) => {
-            const aMetric = a.totalAttempts > 0 ? a[MODEL_FIELD_MAPPINGS.Attempt[sortMetric]] / a.totalAttempts : 0;
-            const bMetric = b.totalAttempts > 0 ? b[MODEL_FIELD_MAPPINGS.Attempt[sortMetric]] / b.totalAttempts : 0;
-            return aMetric - bMetric;
-        })
-    }
-
+function splitAllOther(metrics, topN) {
     const topNMetrics = metrics.slice(0, topN);
     const allOther = metrics.slice(topN);
 
@@ -79,32 +79,54 @@ function getTopicMetrics(topN, dominantTopics, problems, attemptMetricsByLcId, s
     }, {});
     allOtherCombined.dominantTopic = 'All Other';
 
-    const outputMetrics = [...topNMetrics, allOtherCombined];
-    const percentFields = ['solved', 'timeComplexityOptimal', 'spaceComplexityOptimal', 'qualityCode'];
-    
-    outputMetrics.forEach(obj => {
-        const total = obj.totalAttempts;
-        percentFields.forEach(field => {
-            if (obj[field] !== undefined) {
-            obj[field] = total ? (obj[field] / total) : 0;
-            }
-        });
-    });
-
-    return outputMetrics;
+    return [...topNMetrics, allOtherCombined];
 }
 
-function getAttemptCountsByLcId(cutoffDate) {
-    const [headers, ...attemptsData] = getModelDataFromSheet('Attempt');
-    const attemptsObjects = convert2DArrayToObjects(headers, attemptsData);
-    const mapping = {};
-    for (const attempt of attemptsObjects) {
-        if (!cutoffDate || attempt.startTime >= cutoffDate) {
-            mapping[attempt.lcId] = (mapping[attempt.lcId] || 0) + 1;
+function sortMetrics(metrics, sortMetric) {
+    if (sortMetric === 'Unattempted') {
+        metrics.sort((a, b) => b.unattempted - a.unattempted);
+    } else if (sortMetric === 'Total Problems') {
+        metrics.sort((a, b) => a.totalProblems - b.totalProblems);
+    } else if (sortMetric === 'Total Attempts') {
+        metrics.sort((a, b) => a.totalAttempts - b.totalAttempts);
+    } else {
+        metrics.sort((a, b) => {
+            const aMetric = a.totalAttempts > 0 ? a[MODEL_FIELD_MAPPINGS.Attempt[sortMetric]] / a.totalAttempts : 0;
+            const bMetric = b.totalAttempts > 0 ? b[MODEL_FIELD_MAPPINGS.Attempt[sortMetric]] / b.totalAttempts : 0;
+            return aMetric - bMetric;
+        })
+    }
+}
+
+function summarizeMetricsByCustomKey(dominantTopics, problems, attemptMetricsByLcId, keyFields) {
+    const keyFn = p => keyFields.map(field => p[field]).join('|');
+
+    const metricsByKey = {};
+
+    for (const problem of problems) {
+        if (dominantTopics.has(problem.dominantTopic)) {
+            const key = keyFn(problem);
+            if (!metricsByKey.hasOwnProperty(key)) {
+                metricsByKey[key] = Object.fromEntries(
+                    keyFields.map(field => [field, problem[field]])
+                );
+                metricsByKey[key].unattempted = 0;
+            }
+
+            const summary = metricsByKey[key];
+            summary.totalProblems = (summary.totalProblems || 0) + 1;
+
+            if (attemptMetricsByLcId.hasOwnProperty(problem.lcId)) {
+                for (const metric in attemptMetricsByLcId[problem.lcId]) {
+                    summary[metric] = (summary[metric] || 0) + attemptMetricsByLcId[problem.lcId][metric];
+                }
+            } else {
+                summary.unattempted = (summary.unattempted || 0) + 1;
+            }
         }
     }
-    
-    return mapping;
+
+    return Object.values(metricsByKey);
 }
 
 function getAttemptMetricsByLcId(cutoffDate) {

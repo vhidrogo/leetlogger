@@ -1,4 +1,4 @@
-const { NAMED_RANGES, MODEL_FIELD_MAPPINGS, SHEET_NAMES } = require("../constants");
+const { NAMED_RANGES, MODEL_FIELD_MAPPINGS } = require("../constants");
 const { getFilteredProblems } = require("../dataModelUtils/getFilteredProblems");
 const { getModelDataFromSheet } = require("../sheetUtils/getModelDataFromSheet");
 const { getNamedRangeValue } = require("../sheetUtils/getNamedRangeValue");
@@ -6,23 +6,11 @@ const { getNamedRangeValues } = require("../sheetUtils/getNamedRangeValues");
 const { writeToNamedRangeWithHeaders } = require("../sheetUtils/writeToNamedRangeWithHeaders");
 const { convert2DArrayToObjects } = require("../utils/convert2DArrayToObjects");
 
-function onTopicMetricsUpdateClick() {
-    metricsWorkflow({
-        sheetName: SHEET_NAMES.TOPIC_METRICS,
-        keyFields: ['dominantTopic'],
-        includeAllOther: true,
-    });
-}
-
-function onTopicStructureMetricsUpdateClick() {
-    metricsWorkflow({
-        sheetName: SHEET_NAMES.TOPIC_STRUCTURE_METRICS,
-        keyFields: ['dominantTopic', 'inputDataStructure'],
-    });
-}
-
-function metricsWorkflow({ sheetName, keyFields, includeAllOther = false }) {
-    const excludeDominantTopics = getNamedRangeValue(NAMED_RANGES[sheetName].EXCLUDE_DOMINANT_TOPICS)
+function onMetricsDashboardUpdateClick() {
+    const keyFields = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.GROUP_KEYS)
+        .split(',')
+        .map(key => MODEL_FIELD_MAPPINGS.Problem[key.trim()]);
+    const excludeDominantTopics = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.EXCLUDE_DOMINANT_TOPICS)
         .split(',')
         .map(topic => topic.trim());
     const dominantTopics = new Set(
@@ -30,17 +18,18 @@ function metricsWorkflow({ sheetName, keyFields, includeAllOther = false }) {
             .flat()
             .filter(v => v !== '' && !excludeDominantTopics.includes(v))
     );
-    const timeframe = getNamedRangeValue(NAMED_RANGES[sheetName].TIMEFRAME);
-    const sortMetric = getNamedRangeValue(NAMED_RANGES[sheetName].SORT_METRIC);
-    const topN = getNamedRangeValue(NAMED_RANGES[sheetName].TOP_N);
-    const minTotalAttempts = getNamedRangeValue(NAMED_RANGES[sheetName].MIN_TOTAL_ATTEMPTS);
+    const timeframe = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.TIMEFRAME);
+    const sortMetric = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.SORT_METRIC);
+    const topN = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.TOP_N);
+    const minTotalAttempts = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.MIN_TOTAL_ATTEMPTS);
+    const includeAllOther = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.INCLUDE_ALL_OTHER);
     
     const cutoffDate = getCutoffDate(timeframe);
     const attemptMetricsByLcId = getAttemptMetricsByLcId(cutoffDate);
-    const problems = getFilteredProblems(NAMED_RANGES[sheetName].PROBLEM_FILTERS);
+    const problems = getFilteredProblems(NAMED_RANGES.MetricsDashboard.PROBLEM_FILTERS);
 
     let metrics = summarizeMetricsByCustomKey(dominantTopics, problems, attemptMetricsByLcId, keyFields);
-
+    
     if (minTotalAttempts > 0) {
         metrics = metrics.filter(obj => obj.totalAttempts >= minTotalAttempts);
     }
@@ -49,7 +38,7 @@ function metricsWorkflow({ sheetName, keyFields, includeAllOther = false }) {
     metrics = includeAllOther? splitAllOther(metrics, topN) : metrics.slice(0, topN);
     calculatePercents(metrics);
     
-    writeToNamedRangeWithHeaders(metrics, NAMED_RANGES[sheetName].METRICS);
+    writeToNamedRangeWithHeaders(metrics, NAMED_RANGES.MetricsDashboard.METRICS);
 }
 
 function calculatePercents(metrics) {
@@ -71,13 +60,13 @@ function splitAllOther(metrics, topN) {
 
     const allOtherCombined = allOther.reduce((acc, obj) => {
         for (const key in obj) {
-            if (key !== 'dominantTopic') {
+            if (key !== 'groupKey') {
                 acc[key] = (acc[key] || 0) + obj[key];
             }
         }
         return acc;
     }, {});
-    allOtherCombined.dominantTopic = 'All Other';
+    allOtherCombined.groupKey = 'All Other';
 
     return [...topNMetrics, allOtherCombined];
 }
@@ -99,7 +88,7 @@ function sortMetrics(metrics, sortMetric) {
 }
 
 function summarizeMetricsByCustomKey(dominantTopics, problems, attemptMetricsByLcId, keyFields) {
-    const keyFn = p => keyFields.map(field => p[field]).join('|');
+    const keyFn = p => keyFields.map(field => p[field]).join(' | ');
 
     const metricsByKey = {};
 
@@ -107,10 +96,10 @@ function summarizeMetricsByCustomKey(dominantTopics, problems, attemptMetricsByL
         if (dominantTopics.has(problem.dominantTopic)) {
             const key = keyFn(problem);
             if (!metricsByKey.hasOwnProperty(key)) {
-                metricsByKey[key] = Object.fromEntries(
-                    keyFields.map(field => [field, problem[field]])
-                );
-                metricsByKey[key].unattempted = 0;
+                metricsByKey[key] = {
+                    groupKey: key,
+                    unattempted: 0,
+                }
             }
 
             const summary = metricsByKey[key];

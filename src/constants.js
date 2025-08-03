@@ -72,6 +72,17 @@ const NAMED_RANGES = {
         ATTEMPTS: 'LatestAttempts_Attempts',
         COUNT: 'LatestAttempts_Count',
     },
+    MetricsDashboard: {
+        EXCLUDE_DOMINANT_TOPICS: 'MetricsDashboard_ExcludeDominantTopics',
+        GROUP_KEYS: 'MetricsDashboard_GroupKeys',
+        INCLUDE_ALL_OTHER: 'MetricsDashboard_IncludeAllOther',
+        METRICS: 'MetricsDashboard_Metrics',
+        MIN_TOTAL_ATTEMPTS: 'MetricsDashboard_MinTotalAttempts',
+        PROBLEM_FILTERS: 'MetricsDashboard_ProblemFilters',
+        SORT_METRIC: 'MetricsDashboard_SortMetric',
+        TIMEFRAME: 'MetricsDashboard_Timeframe',
+        TOP_N: 'MetricsDashboard_TopN',
+    },
     Options: {
         DOMINANT_TOPICS: 'Options_DominantTopics',
     },
@@ -115,6 +126,7 @@ const PROBLEM_SELECTORS = {
 const SHEET_NAMES = {
     ATTEMPTS: 'Attempts',
     ATTEMPT_IN_PROGRESS: 'AttemptInProgress',
+    METRICS_DASHBOARD: 'MetricsDashboard',
     PROBLEMS: 'Problems',
     TOPIC_METRICS: 'TopicMetrics',
     TOPIC_STRUCTURE_METRICS: 'TopicStructureMetrics',

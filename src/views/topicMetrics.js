@@ -20,6 +20,7 @@ function onMetricsDashboardUpdateClick() {
     );
     const timeframe = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.TIMEFRAME);
     const sortMetric = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.SORT_METRIC);
+    const sortWeakToStrong = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.SORT_WEAK_TO_STRONG);
     const topN = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.TOP_N);
     const minTotalAttempts = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.MIN_TOTAL_ATTEMPTS);
     const includeAllOther = getNamedRangeValue(NAMED_RANGES.MetricsDashboard.INCLUDE_ALL_OTHER);
@@ -33,7 +34,7 @@ function onMetricsDashboardUpdateClick() {
     if (minTotalAttempts > 0) {
         metrics = metrics.filter(obj => obj.totalAttempts >= minTotalAttempts);
     }
-    sortMetrics(metrics, sortMetric);
+    sortMetrics(metrics, sortMetric, sortWeakToStrong);
 
     metrics = includeAllOther? splitAllOther(metrics, topN) : metrics.slice(0, topN);
     calculatePercents(metrics);
@@ -71,18 +72,18 @@ function splitAllOther(metrics, topN) {
     return [...topNMetrics, allOtherCombined];
 }
 
-function sortMetrics(metrics, sortMetric) {
+function sortMetrics(metrics, sortMetric, sortWeakToStrong) {
     if (sortMetric === 'Unattempted') {
-        metrics.sort((a, b) => b.unattempted - a.unattempted);
+        metrics.sort((a, b) => sortWeakToStrong? b.unattempted - a.unattempted : a.unattempted - b.unattempted);
     } else if (sortMetric === 'Total Problems') {
-        metrics.sort((a, b) => a.totalProblems - b.totalProblems);
+        metrics.sort((a, b) => sortWeakToStrong? a.totalProblems - b.totalProblems : b.totalProblems - a.totalProblems);
     } else if (sortMetric === 'Total Attempts') {
-        metrics.sort((a, b) => a.totalAttempts - b.totalAttempts);
+        metrics.sort((a, b) => sortWeakToStrong? a.totalAttempts - b.totalAttempts : b.totalAttempts - a.totalAttempts);
     } else {
         metrics.sort((a, b) => {
             const aMetric = a.totalAttempts > 0 ? a[MODEL_FIELD_MAPPINGS.Attempt[sortMetric]] / a.totalAttempts : 0;
             const bMetric = b.totalAttempts > 0 ? b[MODEL_FIELD_MAPPINGS.Attempt[sortMetric]] / b.totalAttempts : 0;
-            return aMetric - bMetric;
+            return sortWeakToStrong? aMetric - bMetric : bMetric - aMetric;
         })
     }
 }

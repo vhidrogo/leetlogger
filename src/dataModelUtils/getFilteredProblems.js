@@ -22,7 +22,7 @@ function getFilteredProblems(filtersRangeName) {
 
     const criteria = [{ field: 'deleted', value: false, mode: 'equals' }];
     for (const [field, value] of filters) {
-        if (value != 'All') {
+        if (!value.includes('All')) {
             criteria.push({
                 field: MODEL_FIELD_MAPPINGS.Problem[field],
                 value: value,

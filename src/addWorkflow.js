@@ -34,7 +34,7 @@ function resetProblemInputs() {
     ]
 
     const defaults = {
-        'Deleted': false,
+        'Link': '="https://leetcode.com/problems/"&lower(substitute(C3," ","-"))',
         'Premium': false,
     }
 

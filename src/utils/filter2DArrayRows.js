@@ -27,12 +27,15 @@ function filter2DArrayRows(data, criteria) {
     const filtered = data.slice(1).filter(row =>
       criteria.every(({ field, value, mode }) => {
         const cellValue = row[headerIndices[field]]?.toString().toLowerCase();
-        const searchValue = value.toString().toLowerCase();
+
+        const values = typeof value === 'string' && value.includes(',')
+          ? value.split(',').map(v => v.trim().toLowerCase())
+          : [value.toString().toLowerCase()];
 
         if (mode === 'equals') {
-          return cellValue === searchValue;
+          return values.some(val => cellValue === val);
         } else if (mode === 'includes') {
-          return cellValue.includes(searchValue);
+          return values.some(val => cellValue.includes(val));
         }
 
         return false;

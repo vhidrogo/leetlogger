@@ -13,7 +13,7 @@ describe('filter2DArrayRows', () => {
     expect(result).toEqual([
       ['LC ID', 'Dominant Topic', 'Difficulty'],
       [1, 'Two-Pointer', 'Easy'],
-    ])
+    ]);
   });
 
   it('filters with includes', () => {
@@ -23,7 +23,7 @@ describe('filter2DArrayRows', () => {
       ['LC ID', 'Dominant Topic', 'Difficulty'],
       [1, 'Two-Pointer', 'Easy'],
       [2, 'Two-Pointer', 'Medium'],
-    ])
+    ]);
   });
 
   it('filters with multiple criteria', () => {
@@ -35,7 +35,7 @@ describe('filter2DArrayRows', () => {
     expect(result).toEqual([
       ['LC ID', 'Dominant Topic', 'Difficulty'],
       [1, 'Two-Pointer', 'Easy'],
-    ])
+    ]);
   });
 
   it('handles case-insensitive matches', () => {
@@ -64,5 +64,25 @@ describe('filter2DArrayRows', () => {
     expect(() => {
       filter2DArrayRows(invalidData, criteria);
     }).toThrow("Required column 'Dominant Topic' is missing from the data.");
+  });
+
+  it('filters with multi-select equals', () => {
+    const criteria = [{field: 'Difficulty', value: 'Easy, Medium', mode: 'equals'}];
+    const result = filter2DArrayRows(dummyData, criteria);
+    expect(result).toEqual([
+      ['LC ID', 'Dominant Topic', 'Difficulty'],
+      [1, 'Two-Pointer', 'Easy'],
+      [2, 'Two-Pointer', 'Medium'],
+    ]);
+  });
+
+  it('filters with multi-select includes', () => {
+    const criteria = [{field: 'Difficulty', value: 'Eas, Med', mode: 'includes'}];
+    const result = filter2DArrayRows(dummyData, criteria);
+    expect(result).toEqual([
+      ['LC ID', 'Dominant Topic', 'Difficulty'],
+      [1, 'Two-Pointer', 'Easy'],
+      [2, 'Two-Pointer', 'Medium'],
+    ]);
   });
 });

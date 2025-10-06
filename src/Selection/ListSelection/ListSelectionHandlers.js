@@ -12,6 +12,16 @@ function onNextClick() {
     handleListSelection(getNextProblem);
 }
 
+/**
+ * Core handler that manages problem selection flow.
+ *
+ * Validates attempt state, retrieves relevant list data,
+ * and delegates problem selection logic to the provided selector function.
+ *
+ * @param {(orderedList: any[][], problems: any[][], latestAttemptsMap: Object) => Object} selectFn
+ *        The function to determine the next problem (e.g., getNextProblem or getFirstProblem).
+ * @returns {void}
+ */
 function handleListSelection(selectFn) {
     const ui = SpreadsheetApp.getUi();
     if (isAttemptInProgress()) {
@@ -52,6 +62,13 @@ function handleListSelection(selectFn) {
     updateCurrentProblem(problemAttemptAtributes, PROBLEM_SELECTORS.LIST_SELECTION);
 }
 
+/**
+ * Retrieves the ordered list of problems for the given list name.
+ * Filters out rows marked as "Skip".
+ *
+ * @param {string} listName - The name of the list sheet.
+ * @returns {any[][]} The filtered list of problems.
+ */
 function getOrderedList(listName) {
     const data = getSheetByName(listName).getDataRange().getValues();
     

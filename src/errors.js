@@ -1,3 +1,6 @@
+/**
+ * Represents an error when a problem cannot be found in the dataset.
+ */
 class ProblemNotFoundError extends Error {
     constructor(message) {
         super(message);
@@ -5,6 +8,9 @@ class ProblemNotFoundError extends Error {
     }
 }
 
+/**
+ * Represents an error when all problems in a list have been attempted.
+ */
 class NoMoreProblemsError extends Error {
     constructor(message) {
         super(message);

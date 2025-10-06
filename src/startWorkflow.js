@@ -31,6 +31,18 @@ function onSingleSelectionStartClick() {
 }
 
 /**
+ * Starts a problem attempt from the List Selection view.
+ *
+ * Retrieves the problem attributes from the List Selection control panel section  
+ * and initiates the attempt workflow.
+ *
+ * @returns {void}
+ */
+function onListSelectionStartClick() {
+    startWorkflow(NAMED_RANGES.ListSelection.PROBLEM_ATTRIBUTES, PROBLEM_SELECTORS.LIST_SELECTION);
+}
+
+/**
  * Starts a problem attempt workflow by verifying readiness and transitioning to the Attempt In Progress sheet.
  *
  * - Validates that no other attempt is already in progress.

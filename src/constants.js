@@ -72,6 +72,14 @@ const NAMED_RANGES = {
         ATTEMPTS: 'LatestAttempts_Attempts',
         COUNT: 'LatestAttempts_Count',
     },
+    ListSelection: {
+        LATEST_ATTEMPT_ATTRIBUTES: 'ListSelection_LatestAttemptAttributes',
+        LIST: 'ListSelection_List',
+        OPTIMAL_SOLUTION: 'ListSelection_OptimalSolution',
+        PROBLEM_ATTRIBUTES: 'ListSelection_ProblemAttributes',
+        PROBLEM_SEARCH_INPUTS: 'ListSelection_ProblemSearchInputs',
+        TIME_SINCE_CURRENT_PROBLEM: 'ListSelection_TimeSince',
+    },
     MetricsDashboard: {
         EXCLUDE_DOMINANT_TOPICS: 'MetricsDashboard_ExcludeDominantTopics',
         GROUP_KEYS: 'MetricsDashboard_GroupKeys',
@@ -103,6 +111,7 @@ const NAMED_RANGES = {
 
 const PROBLEM_SELECTORS = {
     GROUP_SELECTION: 'GroupSelection',
+    LIST_SELECTION: 'ListSelection',
     SINGLE_SELECTION: 'SingleSelection',
 }
 

@@ -1,4 +1,6 @@
 const { NAMED_RANGES, SHEET_NAMES, PROBLEM_SELECTORS } = require("./constants");
+const { handleListSelection } = require("./Selection/ListSelection/ListSelectionHandlers");
+const { getNextProblem } = require("./Selection/ListSelection/ListSelectionLogic");
 const { getInputValues } = require("./sheetUtils/getInputValues");
 const { getNamedRangeValue } = require("./sheetUtils/getNamedRangeValue");
 const { getSheetByName } = require("./sheetUtils/getSheetByName");
@@ -17,6 +19,7 @@ function onLogClick() {
     }
 
     logAttempt();
+    resetAttemptInputs();
 
     const attemptInitiator = getNamedRangeValue(NAMED_RANGES.AttemptInProgress.INITIATOR);
     if (attemptInitiator === PROBLEM_SELECTORS.GROUP_SELECTION) {
@@ -24,9 +27,10 @@ function onLogClick() {
     }
     else if (attemptInitiator === PROBLEM_SELECTORS.SINGLE_SELECTION) {
         clearCurrentProblem(PROBLEM_SELECTORS.SINGLE_SELECTION);
+    } else if (attemptInitiator === PROBLEM_SELECTORS.LIST_SELECTION) {
+        handleListSelection(getNextProblem);
     }
 
-    resetAttemptInputs();
     getSheetByName(attemptInitiator).activate();
     getSheetByName(SHEET_NAMES.ATTEMPT_IN_PROGRESS).hideSheet();
 }

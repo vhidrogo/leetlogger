@@ -1,5 +1,6 @@
 const { NAMED_RANGES, PROBLEM_SELECTORS } = require("./constants");
 const { generateProblemSelectionList } = require("./dataModelUtils/generateProblemSelectionList");
+const { ProblemNotFoundError, NoMoreProblemsError } = require("./errors");
 const { getNamedRangeValue } = require("./sheetUtils/getNamedRangeValue");
 const { isAttemptInProgress, updateCurrentProblem, updateSkipCount } = require("./workflowUtils");
 
@@ -70,18 +71,4 @@ function findNextProblemIndex(problemsAttributes, currentLcId) {
     }
 
     return nextIndex;
-}
-
-class ProblemNotFoundError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = 'ProblemNotFoundError';
-    }
-}
-
-class NoMoreProblemsError extends Error {
-    constructor(message) {
-        super(message);
-        this.name = 'NoMoreProblemsError';
-    }
 }

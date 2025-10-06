@@ -1,4 +1,4 @@
-const { NoMoreProblemsError } = require("../../errors");
+const { NoMoreProblemsError, ProblemNotFoundError } = require("../../errors");
 const { convert2DArrayToObjects } = require("../../utils/convert2DArrayToObjects");
 const { convertArrayToObject } = require("../../utils/convertArrayToObject");
 
@@ -7,7 +7,7 @@ function getFirstProblem(orderedList, problems) {
     const matches = filter2DArrayRows(problems, [{ field: 'name', value: problemName, mode: 'equals' }]);
 
     if (!matches.length) {
-        throw new Error(`Problem ${problemName} not found`);
+        throw new ProblemNotFoundError(`Problem ${problemName} not found`);
     }
     
     return convertArrayToObject(problems[0], matches[1]);
@@ -23,7 +23,7 @@ function getNextProblem(orderedList, problems, latestAttemptsMap) {
     for (let i = 1; i < orderedList.length; i++) {
         const name = orderedList[i][1];
         const problem = problemsMap[name];
-        if (!problem) throw new Error(`Problem ${name} not found`);
+        if (!problem) throw new ProblemNotFoundError(`Problem ${name} not found`);
 
         const latestAttempt = latestAttemptsMap[problem.lcId];
         

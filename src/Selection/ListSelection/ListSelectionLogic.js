@@ -22,7 +22,7 @@ function getNextProblem(orderedList, problems, latestAttemptsMap) {
 
     for (let i = 1; i < orderedList.length; i++) {
         const name = orderedList[i][1];
-        const problem = problemsMap[orderedList[i][1]];
+        const problem = problemsMap[name];
         if (!problem) throw new Error(`Problem ${name} not found`);
 
         const latestAttempt = latestAttemptsMap[problem.lcId];

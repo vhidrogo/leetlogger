@@ -34,7 +34,8 @@ function handleListSelection(selectFn) {
         if (e instanceof ProblemNotFoundError) {
             ui.alert(`${e.message} Either add it using AddProblem or set Skip = true in ${listName}.`);
             return;
-        } else if (e instanceof NoMoreProblemsError) {
+        }
+        if (e instanceof NoMoreProblemsError) {
             const response = ui.alert(
                 'Restart?',
                 'All problems in list have been attempted, would you like to restart the list?',
